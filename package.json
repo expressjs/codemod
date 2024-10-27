@@ -1,0 +1,29 @@
+{
+    "name": "@expressjs/codemod",
+    "private": true,
+    "version": "0.0.1",
+    "description": "Codemods for updating express servers.",
+    "main": "index.js",
+    "author": "Sebastian Beltran <bjohansebas@gmail.com>",
+    "license": "MIT",
+    "bin": "./dist/index.js",
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "dev": "ncc build ./index.ts -w -o dist/",
+        "build": "ncc build ./index.ts -o ./dist/ --minify --no-cache --no-source-map-register"
+    },
+    "dependencies": {
+        "commander": "^12.1.0",
+        "jscodeshift": "^17.0.0"
+    },
+    "devDependencies": {
+        "@types/jscodeshift": "^0.12.0",
+        "@vercel/ncc": "0.38.2",
+        "typescript": "5.6.3"
+    },
+    "engines": {
+        "node": ">=18"
+    }
+}
