@@ -13,7 +13,8 @@
     "scripts": {
         "dev": "ncc build ./index.ts -w -o dist/",
         "build": "ncc build ./index.ts -o ./dist/ --minify --no-cache --no-source-map-register",
-        "test": "jest"
+        "test": "jest",
+        "test:ci": "jest --ci"
     },
     "dependencies": {
         "commander": "^12.1.0",
