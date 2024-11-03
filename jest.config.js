@@ -1,6 +1,6 @@
 module.exports = {
-    automock: false,
-    transform: {
-      "\\.ts$": ['ts-jest', { isolatedModules: true }],
-    },
-};
+  automock: false,
+  transform: {
+    '\\.ts$': ['ts-jest', { isolatedModules: true }],
+  },
+}

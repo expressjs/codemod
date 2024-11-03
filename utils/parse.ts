@@ -1,5 +1,5 @@
-import { FileInfo, withParser } from "jscodeshift";
+import { type FileInfo, withParser } from 'jscodeshift'
 
 export const getParsedFile = (file: FileInfo) => {
-  return withParser("ts")(file.source);
-};
+  return withParser('ts')(file.source)
+}

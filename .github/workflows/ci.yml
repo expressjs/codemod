@@ -18,6 +18,23 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Setup Node.js {{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          persist-credentials: false
+
+      - name: Install dependencies
+        run: npm install --ignore-scripts --only=dev
+
+      - name: Run lint
+        run: npm run lint
+
   test:
     strategy:
       fail-fast: false

@@ -1,3 +1,3 @@
-import { testSpecBuilder } from "./util";
+import { testSpecBuilder } from './util'
 
-testSpecBuilder("redirect");
+testSpecBuilder('redirect')

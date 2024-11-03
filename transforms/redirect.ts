@@ -1,22 +1,23 @@
-import { API, FileInfo, withParser, CallExpression } from "jscodeshift";
+import type { API, FileInfo } from 'jscodeshift'
+import { CallExpression, withParser } from 'jscodeshift'
 
-export default function transformer(file: FileInfo, _api: API) {
-  const parser = withParser("ts");
+export default function transformer(file: FileInfo, _api: API): string {
+  const parser = withParser('ts')
 
   return parser(file.source)
     .find(CallExpression, {
       callee: {
         property: {
-          name: "redirect",
+          name: 'redirect',
         },
       },
     })
     .map((path) => {
       if (path.value.arguments.length === 2) {
-        path.value.arguments.reverse();
+        path.value.arguments.reverse()
       }
 
-      return path;
+      return path
     })
-    .toSource();
+    .toSource()
 }
