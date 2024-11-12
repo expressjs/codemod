@@ -1,11 +1,8 @@
 import {
   type API,
-  type ASTNode,
   type ASTPath,
-  type ArrowFunctionExpression,
   CallExpression,
   type FileInfo,
-  type FunctionExpression,
   callExpression,
   identifier,
   literal,
@@ -13,8 +10,7 @@ import {
   memberExpression,
 } from 'jscodeshift'
 import { getParsedFile } from '../utils/parse'
-
-const parentExpressionType = ['ArrowFunctionExpression', 'FunctionExpression'] as const
+import { recursiveParent } from '../utils/recursiveParent'
 
 const unifiedMagicString = (path: ASTPath<CallExpression>, projectRequestName: string) => {
   const pathArguments = path.value.arguments
@@ -29,22 +25,6 @@ const unifiedMagicString = (path: ASTPath<CallExpression>, projectRequestName: s
 
     return path
   }
-}
-
-const recursiveParent = (parent: ASTPath<ASTNode>): string | null => {
-  if (parentExpressionType.some((type) => parent.value.type === type)) {
-    const foundNode = parent.value as unknown as ArrowFunctionExpression | FunctionExpression
-    if (foundNode.params[0].type === 'Identifier') {
-      return foundNode.params[0].name
-    }
-    return null
-  }
-
-  if (parent?.parentPath) {
-    return recursiveParent(parent.parentPath)
-  }
-
-  return null
 }
 
 export default function transformer(file: FileInfo, _api: API) {
