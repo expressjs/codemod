@@ -1,5 +1,5 @@
 import type { PathLike } from 'node:fs'
-import { readFile, stat } from 'node:fs/promises'
+import { stat } from 'node:fs/promises'
 import { join, resolve } from 'node:path'
 import { async as glob } from 'fast-glob'
 
@@ -14,7 +14,7 @@ export async function isDirectory(path: PathLike): Promise<boolean> {
 
 export async function getAllFiles(path: PathLike, arrayOfFiles: PathLike[] = []): Promise<PathLike[]> {
   if (await isDirectory(path)) {
-    const files = await glob('**/*.{js,ts}', {
+    const files = await glob('**/*.{js,ts,cjs,mjs,cts,mts}', {
       cwd: path.toString(),
       dot: true,
       ignore: ['node_modules', 'dist', 'build'],
@@ -29,8 +29,4 @@ export async function getAllFiles(path: PathLike, arrayOfFiles: PathLike[] = [])
   }
 
   return arrayOfFiles
-}
-
-export async function getContent(path: PathLike): Promise<string> {
-  return readFile(path, 'utf-8')
 }

@@ -22,3 +22,7 @@ yarn-error.log*
 # Misc
 .DS_Store
 *.pem
+
+*.d.ts
+*.js
+*.js.map
