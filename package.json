@@ -4,7 +4,7 @@
   "version": "0.0.1",
   "description": "Codemods for updating express servers.",
   "main": "index.js",
-  "author": "Sebastian Beltran <bjohansebas@gmail.com>",
+  "contributors": ["Sebastian Beltran <bjohansebas@gmail.com>", "Filip Kudla <filip.kudla.dev@gmail.com>"],
   "license": "MIT",
   "bin": "./index.js",
   "files": ["transforms/*.js", "commands/*.js", "utils/*.js", "config.js", "index.js"],
