@@ -4,6 +4,10 @@ const app = express()
 
 app.get('/', (req, res) => {
     const encoding = req.acceptsLanguages('gzip');
-    res.json({ encoding }, 200);
+    res.json({ encoding });
 });
 
+app.get('/', function (request, response) {
+    const encoding = request.acceptsLanguages('gzip');
+    response.json({ encoding });
+});

@@ -23,5 +23,9 @@ yarn-error.log*
 .DS_Store
 *.pem
 
+*.d.ts
+*.js
+*.js.map
+
 # VSCode
 .vscode
