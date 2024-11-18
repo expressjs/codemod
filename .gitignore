@@ -26,3 +26,6 @@ yarn-error.log*
 *.d.ts
 *.js
 *.js.map
+
+# VSCode
+.vscode
