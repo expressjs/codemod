@@ -9,11 +9,11 @@ export default function transformer(file: FileInfo, _api: API): string {
       .find(CallExpression, {
         callee: {
           property: {
-            name: 'json',
+            name: 'param',
           },
         },
       })
-      // TODO: app.param(fn): This method has been deprecated. Instead, access parameters directly via req.params, or use req.body or req.query as needed.
+      // TODO: The app.param(fn) signature was used for modifying the behavior of the app.param(name, fn) function
       // Add comment line before with this information
       .toSource()
   )
