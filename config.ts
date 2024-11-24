@@ -9,9 +9,9 @@ export const TRANSFORM_OPTIONS = [
     value: 'pluralized-methods',
     version: '5.0.0',
   },
-  { 
-    description: 'Transform the deprecated signatures in Express v4', 
-    value: 'v4-deprecated-signatures', 
-    version: '5.0.0'
+  {
+    description: 'Transform the deprecated signatures in Express v4',
+    value: 'v4-deprecated-signatures',
+    version: '5.0.0',
   },
 ]

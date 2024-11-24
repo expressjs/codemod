@@ -27,7 +27,7 @@ npm i -g @expressjs/codemod # or pnpm, bun, etc.
 
 Use `@expressjs/codemod -h` to explore available command-line options.
 
-<!-- GENERATED START -->
+<!-- USAGE START -->
 
 ```
 Usage: @expressjs/codemod [codemod] [source] [options]
@@ -35,10 +35,32 @@ Usage: @expressjs/codemod [codemod] [source] [options]
 Options:
   -v, --version  Output the current version of @expressjs/codemod.
   -d, --dry      Dry run (no changes are made to files)
+  -p, --print    Print transformed files to stdout
+  --verbose      Show more information about the transform process
   -h, --help     Display this help message.
 ```
 
-<!-- GENERATED END -->
+<!-- USAGE END -->
+
+## Available Codemods
+
+All the available codemods to update your express server:
+
+<!-- CODEMODS START -->
+
+### magic redirect (5.0.0)
+
+Transform the deprecated magic string "back"
+
+### pluralized methods (5.0.0)
+
+Transform the methods to their pluralized versions
+
+### v4 deprecated signatures (5.0.0)
+
+Transform the deprecated signatures in Express v4
+
+<!-- CODEMODS END -->
 
 ##  Contributing
 
