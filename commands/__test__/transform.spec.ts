@@ -3,10 +3,11 @@ import prompts from 'prompts'
 import { transform } from '../transform'
 
 describe('interative mode', () => {
-  it('Transform code without ', async () => {
+  it('Without user input', async () => {
     prompts.inject(['magic-redirect'])
     prompts.inject([path.resolve(process.cwd(), './transforms/__testfixtures__')])
     const res = await transform(undefined, undefined, { dry: true, silent: true })
+
     expect(res.ok).toBe(2)
     expect(res.error).toBe(0)
   }, 10000)
@@ -17,11 +18,12 @@ describe('interative mode', () => {
       dry: true,
       silent: true,
     })
+
     expect(res.ok).toBe(2)
     expect(res.error).toBe(0)
   }, 10000)
 
-  it('Bad source user input', async () => {
+  it("Don't source user input", async () => {
     prompts.inject([path.resolve(process.cwd(), './transforms/__testfixtures__')])
     const res = await transform('magic-redirect', undefined, {
       dry: true,
@@ -34,11 +36,12 @@ describe('interative mode', () => {
 })
 
 describe('Non-Interactive Mode', () => {
-  it('No prompts', async () => {
+  it('Transform code with codemod and user input source', async () => {
     const res = await transform('magic-redirect', path.resolve(process.cwd(), './transforms/__testfixtures__'), {
       dry: true,
       silent: true,
     })
+
     expect(res.ok).toBe(2)
     expect(res.error).toBe(0)
   }, 10000)
