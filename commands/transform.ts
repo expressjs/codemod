@@ -1,9 +1,9 @@
 import { join } from 'node:path'
+import type { Options } from 'jscodeshift'
+import { run as jscodeshift } from 'jscodeshift/src/Runner'
 import { bold } from 'picocolors'
 import prompts from 'prompts'
 import { TRANSFORM_OPTIONS } from '../config'
-import { run as jscodeshift } from 'jscodeshift/src/Runner'
-import type { Options } from 'jscodeshift'
 
 export function onCancel() {
   process.exit(1)
@@ -54,7 +54,6 @@ export async function transform(codemodName: string | undefined, source: string 
 
     sourceSelected = res.path
   }
-
   const transformerPath = join(transformerDirectory, `${codemodSelected}.js`)
 
   const args: Options = {
@@ -63,11 +62,11 @@ export async function transform(codemodName: string | undefined, source: string 
     print,
     verbose: verbose ? 2 : 0,
     babel: false,
-    ignorePattern: "**/node_modules/**",
-    extensions: "cts,mts,ts,js,mjs,cjs",
+    ignorePattern: '**/node_modules/**',
+    extensions: 'cts,mts,ts,js,mjs,cjs',
   }
 
   const jscodeshiftProcess = await jscodeshift(transformerPath, [sourceSelected || ''], args)
-  
+
   return jscodeshiftProcess
 }
