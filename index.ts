@@ -16,8 +16,11 @@ const program = new Command(packageJson.name)
   .option('-d, --dry', 'Dry run (no changes are made to files)')
   .option('-p, --print', 'Print transformed files to stdout')
   .option('--verbose', 'Show more information about the transform process')
+  .option('--silent', 'Don\'t print anything to stdout')
   .usage('[codemod] [source] [options]')
-  .action(transform)
+  .action((codemodName, source, options) => {
+    transform(codemodName, source, options) 
+  })
   // Why this option is necessary is explained here: https://github.com/tj/commander.js/pull/1427
   .enablePositionalOptions()
 

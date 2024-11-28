@@ -1,23 +1,22 @@
 import { join } from 'node:path'
-import execa from 'execa'
-import { bold, green } from 'picocolors'
+import { bold } from 'picocolors'
 import prompts from 'prompts'
 import { TRANSFORM_OPTIONS } from '../config'
-import { getAllFiles } from '../utils/file'
+import { run as jscodeshift } from 'jscodeshift/src/Runner'
+import type { Options } from 'jscodeshift'
 
 export function onCancel() {
   process.exit(1)
 }
 
-const jscodeshiftExecutable = require.resolve('.bin/jscodeshift')
 const transformerDirectory = join(__dirname, '../', 'transforms')
 
 // biome-ignore lint/suspicious/noExplicitAny: 'Any' is used because options can be anything.
-export async function transform(codemodName: string, source: string, options: any): Promise<void> {
+export async function transform(codemodName: string | undefined, source: string | undefined, options: any) {
   let codemodSelected = codemodName
   let sourceSelected = source
 
-  const { dry, print, verbose } = options
+  const { dry, print, verbose, silent } = options
 
   let existCodemod = TRANSFORM_OPTIONS.find(({ value }) => value === codemodSelected)
 
@@ -58,35 +57,17 @@ export async function transform(codemodName: string, source: string, options: an
 
   const transformerPath = join(transformerDirectory, `${codemodSelected}.js`)
 
-  const args: string[] = []
-
-  if (dry) {
-    args.push('--dry')
+  const args: Options = {
+    dry,
+    silent,
+    print,
+    verbose: verbose ? 2 : 0,
+    babel: false,
+    ignorePattern: "**/node_modules/**",
+    extensions: "cts,mts,ts,js,mjs,cjs",
   }
 
-  if (print) {
-    args.push('--print')
-  }
-
-  if (verbose) {
-    args.push('--verbose=2')
-  }
-
-  args.push('--no-babel')
-  args.push('--ignore-pattern=**/node_modules/**')
-  args.push('--extensions=cts,mts,ts,js,mjs,cjs')
-
-  const files = await getAllFiles(sourceSelected)
-
-  args.push('--transform', transformerPath, ...files.map((file) => file.toString()))
-
-  console.log(`Executing command: ${green('jscodeshift')} ${args.join(' ')}`)
-
-  const jscodeshiftProcess = execa(jscodeshiftExecutable, args, {
-    // include ANSI color codes
-    env: process.stdout.isTTY ? { FORCE_COLOR: 'true' } : {},
-  })
-
-  jscodeshiftProcess.stdout?.pipe(process.stdout)
-  jscodeshiftProcess.stderr?.pipe(process.stderr)
+  const jscodeshiftProcess = await jscodeshift(transformerPath, [sourceSelected || ''], args)
+  
+  return jscodeshiftProcess
 }
