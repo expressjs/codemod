@@ -18,7 +18,6 @@
   },
   "dependencies": {
     "commander": "^12.1.0",
-    "execa": "^5.1.1",
     "fast-glob": "^3.3.2",
     "jscodeshift": "^17.1.1",
     "picocolors": "^1.1.1",
