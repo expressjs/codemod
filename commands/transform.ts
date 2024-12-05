@@ -6,19 +6,17 @@ import prompts from 'prompts'
 import { TRANSFORM_OPTIONS } from '../config'
 
 export function onCancel() {
+  console.info('> Cancelled process. Program will stop now without any actions. \n')
   process.exit(1)
 }
 
 const transformerDirectory = join(__dirname, '../', 'transforms')
 
-// biome-ignore lint/suspicious/noExplicitAny: 'Any' is used because options can be anything.
-export async function transform(codemodName: string | undefined, source: string | undefined, options: any) {
+export async function transform(codemodName?: string, source?: string, options?: Record<string, unknown>) {
   let codemodSelected = codemodName
   let sourceSelected = source
 
-  const { dry, print, verbose, silent } = options
-
-  let existCodemod = TRANSFORM_OPTIONS.find(({ value }) => value === codemodSelected)
+  const existCodemod = TRANSFORM_OPTIONS.find(({ value }) => value === codemodSelected)
 
   if (!codemodSelected || (codemodSelected && !existCodemod)) {
     const res = await prompts(
@@ -38,7 +36,6 @@ export async function transform(codemodName: string | undefined, source: string 
     )
 
     codemodSelected = res.transformer
-    existCodemod = TRANSFORM_OPTIONS.find(({ value }) => value === codemodSelected)
   }
 
   if (!sourceSelected) {
@@ -54,13 +51,17 @@ export async function transform(codemodName: string | undefined, source: string 
 
     sourceSelected = res.path
   }
+
+  if (!codemodSelected) {
+    console.info('> Codemod is not selected. Exist the program. \n')
+    process.exit(1)
+  }
+
   const transformerPath = join(transformerDirectory, `${codemodSelected}.js`)
 
   const args: Options = {
-    dry,
-    silent,
-    print,
-    verbose: verbose ? 2 : 0,
+    ...options,
+    verbose: options?.verbose ? 2 : 0,
     babel: false,
     ignorePattern: '**/node_modules/**',
     extensions: 'cts,mts,ts,js,mjs,cjs',
