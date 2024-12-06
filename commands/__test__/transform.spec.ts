@@ -1,48 +1,112 @@
-import path from 'node:path'
+import { join } from 'node:path'
+import { run } from 'jscodeshift/src/Runner'
 import prompts from 'prompts'
 import { transform } from '../transform'
 
-describe('interative mode', () => {
-  it('Without user input', async () => {
-    prompts.inject(['magic-redirect'])
-    prompts.inject([path.resolve(process.cwd(), './transforms/__testfixtures__')])
-    const res = await transform(undefined, undefined, { dry: true, silent: true })
+jest.mock('jscodeshift/src/Runner', () => ({
+  run: jest.fn(),
+}))
 
-    expect(res.ok).toBe(2)
-    expect(res.error).toBe(0)
-  }, 10000)
+describe('interactive mode', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
 
-  it('Bad codemod user input', async () => {
+  it('runs without codemodName and source params provided', async () => {
+    const spyOnConsole = jest.spyOn(console, 'log').mockImplementation()
+
     prompts.inject(['magic-redirect'])
-    const res = await transform('bad-codemod', path.resolve(process.cwd(), './transforms/__testfixtures__'), {
+    prompts.inject(['./transforms/__testfixtures__'])
+
+    await transform(undefined, undefined, { dry: true, silent: true })
+
+    expect(spyOnConsole).not.toHaveBeenCalled()
+    expect(run).toHaveBeenCalledTimes(1)
+    expect(run).toHaveBeenCalledWith(
+      join(__dirname, '../../', 'transforms/magic-redirect.js'),
+      ['./transforms/__testfixtures__'],
+      {
+        babel: false,
+        dry: true,
+        extensions: 'cts,mts,ts,js,mjs,cjs',
+        ignorePattern: '**/node_modules/**',
+        silent: true,
+        verbose: 0,
+      },
+    )
+  })
+
+  it('runs properly on incorrect user input', async () => {
+    const spyOnConsole = jest.spyOn(console, 'log').mockImplementation()
+
+    prompts.inject(['magic-redirect'])
+
+    await transform('bad-codemod', './transforms/__testfixtures__', {
       dry: true,
       silent: true,
     })
 
-    expect(res.ok).toBe(2)
-    expect(res.error).toBe(0)
-  }, 10000)
+    expect(spyOnConsole).not.toHaveBeenCalled()
+    expect(run).toHaveBeenCalledTimes(1)
+    expect(run).toHaveBeenCalledWith(
+      join(__dirname, '../../', 'transforms/magic-redirect.js'),
+      ['./transforms/__testfixtures__'],
+      {
+        babel: false,
+        dry: true,
+        extensions: 'cts,mts,ts,js,mjs,cjs',
+        ignorePattern: '**/node_modules/**',
+        silent: true,
+        verbose: 0,
+      },
+    )
+  })
 
-  it("Don't source user input", async () => {
-    prompts.inject([path.resolve(process.cwd(), './transforms/__testfixtures__')])
-    const res = await transform('magic-redirect', undefined, {
+  it('runs with codemodName and without source param provided', async () => {
+    const spyOnConsole = jest.spyOn(console, 'log').mockImplementation()
+
+    prompts.inject(['__testfixtures__'])
+
+    await transform('magic-redirect', undefined, {
       dry: true,
       silent: true,
     })
 
-    expect(res.ok).toBe(2)
-    expect(res.error).toBe(0)
-  }, 10000)
+    expect(spyOnConsole).not.toHaveBeenCalled()
+    expect(run).toHaveBeenCalledTimes(1)
+    expect(run).toHaveBeenCalledWith(join(__dirname, '../../', 'transforms/magic-redirect.js'), ['__testfixtures__'], {
+      babel: false,
+      dry: true,
+      extensions: 'cts,mts,ts,js,mjs,cjs',
+      ignorePattern: '**/node_modules/**',
+      silent: true,
+      verbose: 0,
+    })
+  })
 })
 
 describe('Non-Interactive Mode', () => {
-  it('Transform code with codemod and user input source', async () => {
-    const res = await transform('magic-redirect', path.resolve(process.cwd(), './transforms/__testfixtures__'), {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  it('Transforms code with codemodName and source params provided', async () => {
+    const spyOnConsole = jest.spyOn(console, 'log').mockImplementation()
+
+    await transform('magic-redirect', '__testfixtures__', {
       dry: true,
       silent: true,
     })
 
-    expect(res.ok).toBe(2)
-    expect(res.error).toBe(0)
-  }, 10000)
+    expect(spyOnConsole).not.toHaveBeenCalled()
+    expect(run).toHaveBeenCalledTimes(1)
+    expect(run).toHaveBeenCalledWith(join(__dirname, '../../', 'transforms/magic-redirect.js'), ['__testfixtures__'], {
+      babel: false,
+      dry: true,
+      extensions: 'cts,mts,ts,js,mjs,cjs',
+      ignorePattern: '**/node_modules/**',
+      silent: true,
+      verbose: 0,
+    })
+  })
 })
