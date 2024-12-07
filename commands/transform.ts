@@ -4,11 +4,7 @@ import { run as jscodeshift } from 'jscodeshift/src/Runner'
 import { bold } from 'picocolors'
 import prompts from 'prompts'
 import { TRANSFORM_OPTIONS } from '../config'
-
-export function onCancel() {
-  console.info('> Cancelled process. Program will stop now without any actions. \n')
-  process.exit(1)
-}
+import { onCancel } from '../utils/share'
 
 const transformerDirectory = join(__dirname, '../', 'transforms')
 
