@@ -1,4 +1,4 @@
-import { join } from 'node:path'
+import { join, resolve } from 'node:path'
 import type { Options } from 'jscodeshift'
 import { run as jscodeshift } from 'jscodeshift/src/Runner'
 import { bold } from 'picocolors'
@@ -51,6 +51,8 @@ export async function transform(codemodName?: string, source?: string, options?:
 
     sourceSelected = res.path
   }
+
+  sourceSelected = resolve(sourceSelected || '')
 
   if (!codemodSelected) {
     console.info('> Codemod is not selected. Exist the program. \n')
