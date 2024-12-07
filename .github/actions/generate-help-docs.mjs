@@ -1,9 +1,9 @@
 import { execSync } from 'node:child_process'
 import { readFile, writeFile } from 'node:fs/promises'
 import { join } from 'node:path'
-import { TRANSFORM_OPTIONS } from '../../config.js'
+import { TRANSFORM_OPTIONS } from '../../build/config.js'
 
-let output = execSync('node ../../index.js --help', {
+let output = execSync('node ../../build/index.js --help', {
   encoding: 'utf-8',
 })
 
