@@ -11,5 +11,5 @@
     "outDir": "build"
   },
   "include": ["**/*.ts"],
-  "exclude": ["node_modules", "transforms/__testfixtures__/**"]
+  "exclude": ["node_modules", "transforms/__testfixtures__/**", "__test__", "**/*.spec.ts"]
 }
