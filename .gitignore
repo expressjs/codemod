@@ -12,7 +12,7 @@ node_modules
 coverage
 
 # Build Outputs
-dist
+build
 
 # Debug
 npm-debug.log*
