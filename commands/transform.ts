@@ -67,7 +67,5 @@ export async function transform(codemodName?: string, source?: string, options?:
     extensions: 'cts,mts,ts,js,mjs,cjs',
   }
 
-  const jscodeshiftProcess = await jscodeshift(transformerPath, [sourceSelected || ''], args)
-
-  return jscodeshiftProcess
+  await jscodeshift(transformerPath, [sourceSelected || ''], args)
 }

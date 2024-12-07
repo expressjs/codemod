@@ -18,9 +18,7 @@ const program = new Command(packageJson.name)
   .option('--verbose', 'Show more information about the transform process')
   .option('--silent', "Don't print anything to stdout")
   .usage('[codemod] [source] [options]')
-  .action((codemodName, source, options) => {
-    transform(codemodName, source, options)
-  })
+  .action(transform)
   // Why this option is necessary is explained here: https://github.com/tj/commander.js/pull/1427
   .enablePositionalOptions()
 
