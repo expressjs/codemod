@@ -1,17 +1,15 @@
-import { TRANSFORM_OPTIONS } from '../config'
-import { join } from 'node:path'
-import { getAllFiles } from '../utils/file'
+import { readFile } from 'node:fs/promises'
+import { join, resolve } from 'node:path'
+import type { Options } from 'jscodeshift'
+import { run as jscodeshift } from 'jscodeshift/src/Runner'
 import prompts from 'prompts'
-import execa from 'execa'
-
-const jscodeshiftExecutable = require.resolve('.bin/jscodeshift')
-
+import { coerce, compare } from 'semver'
+import { TRANSFORM_OPTIONS } from '../config'
+import { onCancel } from '../utils/share'
 
 const transformerDirectory = join(__dirname, '../', 'transforms')
-export function onCancel() {
-  process.exit(1)
-}
-export async function upgrade(source: string): Promise<void> {
+
+export async function upgrade(source: string | undefined) {
   let sourceSelected = source
 
   if (!sourceSelected) {
@@ -28,21 +26,62 @@ export async function upgrade(source: string): Promise<void> {
     sourceSelected = res.path
   }
 
-  const files = await getAllFiles(sourceSelected)
+  try {
+    const packageJsonPath = resolve(sourceSelected || '', 'package.json')
+    const packageJson = JSON.parse(await readFile(packageJsonPath, 'utf8'))
 
-  const args: string[] = []
+    const codemods = suggestCodemods(packageJson)
 
-  args.push('--no-babel')
-  args.push('--silent')
-  args.push('--ignore-pattern=**/node_modules/**')
-  args.push('--extensions=cts,mts,ts,js,mjs,cjs')
-  args.push( ...files.map((file) => file.toString()))
+    const { codemodsSelected } = await prompts(
+      {
+        type: 'multiselect',
+        name: 'codemodsSelected',
+        message: `The following 'codemods' are recommended for your upgrade. Select the ones to apply.`,
+        choices: codemods.map(({ description, value, version }) => {
+          return {
+            title: `(v${version}) ${value}`,
+            description,
+            value,
+            selected: true,
+          }
+        }),
+      },
+      { onCancel },
+    )
 
+    const args: Options = {
+      dry: false,
+      babel: false,
+      ignorePattern: '**/node_modules/**',
+      extensions: 'cts,mts,ts,js,mjs,cjs',
+    }
+    const results: object[] = []
 
-  for (const { value } of TRANSFORM_OPTIONS) {
-    const transformerPath = require.resolve(`${transformerDirectory}/${value}.js`)
-    const jscodeshiftProcess = execa(jscodeshiftExecutable, [...args, '--transform', transformerPath])
-    
-      jscodeshiftProcess.stderr?.pipe(process.stderr)
+    for (const codemod of codemodsSelected) {
+      const transformerPath = require.resolve(`${transformerDirectory}/${codemod}.js`)
+      const jscodeshiftProcess = await jscodeshift(transformerPath, [sourceSelected || ''], args)
+
+      results.push(jscodeshiftProcess)
+    }
+
+    return results
+  } catch (err) {
+    console.log(err)
   }
+}
+
+function suggestCodemods(packageJson) {
+  const { dependencies } = packageJson
+
+  if (dependencies?.express == null) {
+    return []
+  }
+
+  const expressVersion = coerce(dependencies.express)?.version ?? '4.0.0'
+
+  const codemodsSuggested = TRANSFORM_OPTIONS.filter((a) => {
+    return compare(a.version, expressVersion) > 0
+  })
+
+  return codemodsSuggested
 }
