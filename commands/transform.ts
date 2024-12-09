@@ -12,50 +12,53 @@ export function onCancel() {
 
 const transformerDirectory = join(__dirname, '../', 'transforms')
 
+const selectCodemod = async (): Promise<string | undefined> => {
+  const res = await prompts(
+    {
+      type: 'select',
+      name: 'transformer',
+      message: 'Which codemod would you like to apply?',
+      choices: TRANSFORM_OPTIONS.map(({ description, value, version }) => {
+        return {
+          title: `(${bold(`v${version}`)}) ${value}`,
+          description,
+          value,
+        }
+      }),
+    },
+    { onCancel },
+  )
+
+  return res.transformer
+}
+
+const selectSource = async (): Promise<string | undefined> => {
+  const res = await prompts(
+    {
+      type: 'text',
+      name: 'path',
+      message: 'Which files or directories should the codemods be applied to?',
+      initial: '.',
+    },
+    { onCancel },
+  )
+
+  return res.path
+}
+
 export async function transform(codemodName?: string, source?: string, options?: Record<string, unknown>) {
-  let codemodSelected = codemodName
-  let sourceSelected = source
-
-  const existCodemod = TRANSFORM_OPTIONS.find(({ value }) => value === codemodSelected)
-
-  if (!codemodSelected || (codemodSelected && !existCodemod)) {
-    const res = await prompts(
-      {
-        type: 'select',
-        name: 'transformer',
-        message: 'Which codemod would you like to apply?',
-        choices: TRANSFORM_OPTIONS.map(({ description, value, version }) => {
-          return {
-            title: `(${bold(`v${version}`)}) ${value}`,
-            description,
-            value,
-          }
-        }),
-      },
-      { onCancel },
-    )
-
-    codemodSelected = res.transformer
-  }
-
-  if (!sourceSelected) {
-    const res = await prompts(
-      {
-        type: 'text',
-        name: 'path',
-        message: 'Which files or directories should the codemods be applied to?',
-        initial: '.',
-      },
-      { onCancel },
-    )
-
-    sourceSelected = res.path
-  }
-
-  sourceSelected = resolve(sourceSelected || '')
+  const existCodemod = TRANSFORM_OPTIONS.find(({ value }) => value === codemodName)
+  const codemodSelected = !codemodName || (codemodName && !existCodemod) ? await selectCodemod() : codemodName
 
   if (!codemodSelected) {
-    console.info('> Codemod is not selected. Exist the program. \n')
+    console.info('> Codemod is not selected. Exits the program. \n')
+    process.exit(1)
+  }
+
+  const sourceSelected = source || (await selectSource())
+
+  if (!sourceSelected) {
+    console.info('> Source path for project is not selected. Exits the program. \n')
     process.exit(1)
   }
 
@@ -69,5 +72,5 @@ export async function transform(codemodName?: string, source?: string, options?:
     extensions: 'cts,mts,ts,js,mjs,cjs',
   }
 
-  await jscodeshift(transformerPath, [sourceSelected || ''], args)
+  await jscodeshift(transformerPath, [resolve(sourceSelected)], args)
 }
