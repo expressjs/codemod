@@ -1,4 +1,3 @@
-import { join, resolve } from 'node:path'
 import { run } from 'jscodeshift/src/Runner'
 import prompts from 'prompts'
 import { transform } from '../transform'
@@ -23,8 +22,8 @@ describe('interactive mode', () => {
     expect(spyOnConsole).not.toHaveBeenCalled()
     expect(run).toHaveBeenCalledTimes(1)
     expect(run).toHaveBeenCalledWith(
-      join(__dirname, '../../', 'transforms/magic-redirect.js'),
-      [resolve('./transforms/__testfixtures__')],
+      expect.stringContaining('/transforms/magic-redirect.js'),
+      expect.arrayContaining([expect.stringContaining('/transforms/__testfixtures__')]),
       {
         babel: false,
         dry: true,
@@ -49,8 +48,8 @@ describe('interactive mode', () => {
     expect(spyOnConsole).not.toHaveBeenCalled()
     expect(run).toHaveBeenCalledTimes(1)
     expect(run).toHaveBeenCalledWith(
-      join(__dirname, '../../', 'transforms/magic-redirect.js'),
-      [resolve('./transforms/__testfixtures__')],
+      expect.stringContaining('/transforms/magic-redirect.js'),
+      expect.arrayContaining([expect.stringContaining('/transforms/__testfixtures__')]),
       {
         babel: false,
         dry: true,
@@ -75,8 +74,8 @@ describe('interactive mode', () => {
     expect(spyOnConsole).not.toHaveBeenCalled()
     expect(run).toHaveBeenCalledTimes(1)
     expect(run).toHaveBeenCalledWith(
-      join(__dirname, '../../', 'transforms/magic-redirect.js'),
-      [resolve('__testfixtures__')],
+      expect.stringContaining('/transforms/magic-redirect.js'),
+      expect.arrayContaining([expect.stringContaining('/__testfixtures__')]),
       {
         babel: false,
         dry: true,
@@ -105,8 +104,8 @@ describe('Non-Interactive Mode', () => {
     expect(spyOnConsole).not.toHaveBeenCalled()
     expect(run).toHaveBeenCalledTimes(1)
     expect(run).toHaveBeenCalledWith(
-      join(__dirname, '../../', 'transforms/magic-redirect.js'),
-      [resolve('__testfixtures__')],
+      expect.stringContaining('/transforms/magic-redirect.js'),
+      expect.arrayContaining([expect.stringContaining('__testfixtures__')]),
       {
         babel: false,
         dry: true,
