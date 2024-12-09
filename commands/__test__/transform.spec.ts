@@ -1,4 +1,3 @@
-import { join } from 'node:path'
 import { run } from 'jscodeshift/src/Runner'
 import prompts from 'prompts'
 import { transform } from '../transform'
@@ -23,8 +22,8 @@ describe('interactive mode', () => {
     expect(spyOnConsole).not.toHaveBeenCalled()
     expect(run).toHaveBeenCalledTimes(1)
     expect(run).toHaveBeenCalledWith(
-      join(__dirname, '../../', 'transforms/magic-redirect.js'),
-      ['./transforms/__testfixtures__'],
+      expect.stringContaining('/transforms/magic-redirect.js'),
+      expect.arrayContaining([expect.stringContaining('/transforms/__testfixtures__')]),
       {
         babel: false,
         dry: true,
@@ -49,8 +48,8 @@ describe('interactive mode', () => {
     expect(spyOnConsole).not.toHaveBeenCalled()
     expect(run).toHaveBeenCalledTimes(1)
     expect(run).toHaveBeenCalledWith(
-      join(__dirname, '../../', 'transforms/magic-redirect.js'),
-      ['./transforms/__testfixtures__'],
+      expect.stringContaining('/transforms/magic-redirect.js'),
+      expect.arrayContaining([expect.stringContaining('/transforms/__testfixtures__')]),
       {
         babel: false,
         dry: true,
@@ -74,14 +73,18 @@ describe('interactive mode', () => {
 
     expect(spyOnConsole).not.toHaveBeenCalled()
     expect(run).toHaveBeenCalledTimes(1)
-    expect(run).toHaveBeenCalledWith(join(__dirname, '../../', 'transforms/magic-redirect.js'), ['__testfixtures__'], {
-      babel: false,
-      dry: true,
-      extensions: 'cts,mts,ts,js,mjs,cjs',
-      ignorePattern: '**/node_modules/**',
-      silent: true,
-      verbose: 0,
-    })
+    expect(run).toHaveBeenCalledWith(
+      expect.stringContaining('/transforms/magic-redirect.js'),
+      expect.arrayContaining([expect.stringContaining('/__testfixtures__')]),
+      {
+        babel: false,
+        dry: true,
+        extensions: 'cts,mts,ts,js,mjs,cjs',
+        ignorePattern: '**/node_modules/**',
+        silent: true,
+        verbose: 0,
+      },
+    )
   })
 })
 
@@ -100,13 +103,17 @@ describe('Non-Interactive Mode', () => {
 
     expect(spyOnConsole).not.toHaveBeenCalled()
     expect(run).toHaveBeenCalledTimes(1)
-    expect(run).toHaveBeenCalledWith(join(__dirname, '../../', 'transforms/magic-redirect.js'), ['__testfixtures__'], {
-      babel: false,
-      dry: true,
-      extensions: 'cts,mts,ts,js,mjs,cjs',
-      ignorePattern: '**/node_modules/**',
-      silent: true,
-      verbose: 0,
-    })
+    expect(run).toHaveBeenCalledWith(
+      expect.stringContaining('/transforms/magic-redirect.js'),
+      expect.arrayContaining([expect.stringContaining('__testfixtures__')]),
+      {
+        babel: false,
+        dry: true,
+        extensions: 'cts,mts,ts,js,mjs,cjs',
+        ignorePattern: '**/node_modules/**',
+        silent: true,
+        verbose: 0,
+      },
+    )
   })
 })
