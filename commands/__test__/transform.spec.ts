@@ -2,6 +2,11 @@ import { run } from 'jscodeshift/src/Runner'
 import prompts from 'prompts'
 import { transform } from '../transform'
 
+const defaultOptions = {
+  dry: true,
+  silent: true,
+}
+
 jest.mock('jscodeshift/src/Runner', () => ({
   run: jest.fn(),
 }))
@@ -17,7 +22,7 @@ describe('interactive mode', () => {
     prompts.inject(['magic-redirect'])
     prompts.inject(['./transforms/__testfixtures__'])
 
-    await transform(undefined, undefined, { dry: true, silent: true })
+    await transform(undefined, undefined, defaultOptions)
 
     expect(spyOnConsole).not.toHaveBeenCalled()
     expect(run).toHaveBeenCalledTimes(1)
@@ -40,10 +45,7 @@ describe('interactive mode', () => {
 
     prompts.inject(['magic-redirect'])
 
-    await transform('bad-codemod', './transforms/__testfixtures__', {
-      dry: true,
-      silent: true,
-    })
+    await transform('bad-codemod', './transforms/__testfixtures__', defaultOptions)
 
     expect(spyOnConsole).not.toHaveBeenCalled()
     expect(run).toHaveBeenCalledTimes(1)
@@ -66,10 +68,7 @@ describe('interactive mode', () => {
 
     prompts.inject(['__testfixtures__'])
 
-    await transform('magic-redirect', undefined, {
-      dry: true,
-      silent: true,
-    })
+    await transform('magic-redirect', undefined, defaultOptions)
 
     expect(spyOnConsole).not.toHaveBeenCalled()
     expect(run).toHaveBeenCalledTimes(1)
@@ -96,10 +95,7 @@ describe('Non-Interactive Mode', () => {
   it('Transforms code with codemodName and source params provided', async () => {
     const spyOnConsole = jest.spyOn(console, 'log').mockImplementation()
 
-    await transform('magic-redirect', '__testfixtures__', {
-      dry: true,
-      silent: true,
-    })
+    await transform('magic-redirect', '__testfixtures__', defaultOptions)
 
     expect(spyOnConsole).not.toHaveBeenCalled()
     expect(run).toHaveBeenCalledTimes(1)

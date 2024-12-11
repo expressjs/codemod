@@ -12,7 +12,7 @@ export function onCancel() {
 
 const transformerDirectory = join(__dirname, '../', 'transforms')
 
-const selectCodemod = async (): Promise<string | undefined> => {
+const selectCodemod = async (): Promise<string> => {
   const res = await prompts(
     {
       type: 'select',
@@ -32,7 +32,7 @@ const selectCodemod = async (): Promise<string | undefined> => {
   return res.transformer
 }
 
-const selectSource = async (): Promise<string | undefined> => {
+const selectSource = async (): Promise<string> => {
   const res = await prompts(
     {
       type: 'text',
@@ -55,7 +55,7 @@ export async function transform(codemodName?: string, source?: string, options?:
     process.exit(1)
   }
 
-  const sourceSelected = source || (await selectSource())
+  const sourceSelected = resolve(source || (await selectSource()))
 
   if (!sourceSelected) {
     console.info('> Source path for project is not selected. Exits the program. \n')
