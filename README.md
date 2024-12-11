@@ -37,6 +37,7 @@ Options:
   -d, --dry      Dry run (no changes are made to files)
   -p, --print    Print transformed files to stdout
   --verbose      Show more information about the transform process
+  --silent       Don't print anything to stdout
   -h, --help     Display this help message.
 ```
 
@@ -48,17 +49,33 @@ All the available codemods to update your express server:
 
 <!-- CODEMODS START -->
 
-### magic redirect (5.0.0)
+### magic redirect (v5.0.0)
 
 Transform the deprecated magic string "back"
 
-### pluralized methods (5.0.0)
+### pluralized methods (v5.0.0)
 
 Transform the methods to their pluralized versions
 
-### v4 deprecated signatures (5.0.0)
+### v4 deprecated signatures (v5.0.0)
 
 Transform the deprecated signatures in Express v4
+
+### redirect (v5.0.0)
+
+Reverse param order for "redirect" method
+
+### req param (v5.0.0)
+
+Change request.param() to dedicated methods
+
+### send file (v5.0.0)
+
+Convert method name "sendfile" to "sendFile"
+
+### full name delete (v5.0.0)
+
+Convert method name "del" to "delete"
 
 <!-- CODEMODS END -->
 
