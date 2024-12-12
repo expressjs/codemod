@@ -61,21 +61,9 @@ Transform the methods to their pluralized versions
 
 Transform the deprecated signatures in Express v4
 
-### redirect (v5.0.0)
-
-Reverse param order for "redirect" method
-
 ### req param (v5.0.0)
 
 Change request.param() to dedicated methods
-
-### send file (v5.0.0)
-
-Convert method name "sendfile" to "sendFile"
-
-### full name delete (v5.0.0)
-
-Convert method name "del" to "delete"
 
 <!-- CODEMODS END -->
 
