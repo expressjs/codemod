@@ -5,6 +5,7 @@
 
 import { Command } from 'commander'
 import { transform } from './commands/transform'
+import { upgrade } from './commands/upgrade'
 import packageJson from './package.json'
 
 const program = new Command(packageJson.name)
@@ -21,5 +22,11 @@ const program = new Command(packageJson.name)
   .action(transform)
   // Why this option is necessary is explained here: https://github.com/tj/commander.js/pull/1427
   .enablePositionalOptions()
+
+program
+  .command('upgrade')
+  .description('Upgrade your express server to the latest version.')
+  .argument('[source]', 'Path to source files or directory to transform.')
+  .action(upgrade)
 
 program.parse(process.argv)
