@@ -1,4 +1,4 @@
-import path, { normalize } from 'node:path'
+import { sep } from 'node:path'
 import { run } from 'jscodeshift/src/Runner'
 import prompts from 'prompts'
 import { transform } from '../transform'
@@ -8,10 +8,7 @@ const defaultOptions = {
   silent: true,
 }
 
-const { platform } = process
-const locale = path[platform === 'win32' ? 'win32' : 'posix']
-
-const transformerPath = (inputPath: string) => locale.normalize(inputPath)
+const getSystemPath = (inputPath: string) => inputPath.replaceAll('/', sep)
 
 jest.mock('jscodeshift/src/Runner', () => ({
   run: jest.fn(),
@@ -33,8 +30,8 @@ describe('interactive mode', () => {
     expect(spyOnConsole).not.toHaveBeenCalled()
     expect(run).toHaveBeenCalledTimes(1)
     expect(run).toHaveBeenCalledWith(
-      expect.stringContaining('/transforms/magic-redirect.js'),
-      expect.arrayContaining([expect.stringContaining(transformerPath('/transforms/__testfixtures__'))]),
+      expect.stringContaining(getSystemPath('/transforms/magic-redirect.js')),
+      expect.arrayContaining([expect.stringContaining(getSystemPath('/transforms/__testfixtures__'))]),
       {
         babel: false,
         dry: true,
@@ -56,8 +53,8 @@ describe('interactive mode', () => {
     expect(spyOnConsole).not.toHaveBeenCalled()
     expect(run).toHaveBeenCalledTimes(1)
     expect(run).toHaveBeenCalledWith(
-      expect.stringContaining('/transforms/magic-redirect.js'),
-      expect.arrayContaining([expect.stringContaining(transformerPath('/transforms/__testfixtures__'))]),
+      expect.stringContaining(getSystemPath('/transforms/magic-redirect.js')),
+      expect.arrayContaining([expect.stringContaining(getSystemPath('/transforms/__testfixtures__'))]),
       {
         babel: false,
         dry: true,
@@ -79,8 +76,8 @@ describe('interactive mode', () => {
     expect(spyOnConsole).not.toHaveBeenCalled()
     expect(run).toHaveBeenCalledTimes(1)
     expect(run).toHaveBeenCalledWith(
-      expect.stringContaining('/transforms/magic-redirect.js'),
-      expect.arrayContaining([expect.stringContaining(transformerPath('__testfixtures__'))]),
+      expect.stringContaining(getSystemPath('/transforms/magic-redirect.js')),
+      expect.arrayContaining([expect.stringContaining('__testfixtures__')]),
       {
         babel: false,
         dry: true,
@@ -106,7 +103,7 @@ describe('Non-Interactive Mode', () => {
     expect(spyOnConsole).not.toHaveBeenCalled()
     expect(run).toHaveBeenCalledTimes(1)
     expect(run).toHaveBeenCalledWith(
-      expect.stringContaining('/transforms/magic-redirect.js'),
+      expect.stringContaining(getSystemPath('/transforms/magic-redirect.js')),
       expect.arrayContaining([expect.stringContaining('__testfixtures__')]),
       {
         babel: false,
