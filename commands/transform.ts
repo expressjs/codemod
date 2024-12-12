@@ -55,7 +55,7 @@ export async function transform(codemodName?: string, source?: string, options?:
     process.exit(1)
   }
 
-  const sourceSelected = resolve(source || (await selectSource()))
+  const sourceSelected = source || (await selectSource())
 
   if (!sourceSelected) {
     console.info('> Source path for project is not selected. Exits the program. \n')
