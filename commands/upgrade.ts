@@ -5,25 +5,16 @@ import { run as jscodeshift } from 'jscodeshift/src/Runner'
 import prompts from 'prompts'
 import { coerce, compare } from 'semver'
 import { TRANSFORM_OPTIONS } from '../config'
-import { onCancel } from '../utils/share'
+import { onCancel, promptSource } from '../utils/share'
 
 const transformerDirectory = join(__dirname, '../', 'transforms')
 
 export async function upgrade(source: string | undefined) {
-  let sourceSelected = source
+  const sourceSelected = source || (await promptSource('Which directory should the codemods be applied to?'))
 
   if (!sourceSelected) {
-    const res = await prompts(
-      {
-        type: 'text',
-        name: 'path',
-        message: 'Which files or directories should the codemods be applied to?',
-        initial: '.',
-      },
-      { onCancel },
-    )
-
-    sourceSelected = res.path
+    console.info('> Source path for project is not selected. Exits the program. \n')
+    process.exit(1)
   }
 
   try {
@@ -55,16 +46,12 @@ export async function upgrade(source: string | undefined) {
       ignorePattern: '**/node_modules/**',
       extensions: 'cts,mts,ts,js,mjs,cjs',
     }
-    const results: object[] = []
 
     for (const codemod of codemodsSelected) {
       const transformerPath = require.resolve(`${transformerDirectory}/${codemod}.js`)
-      const jscodeshiftProcess = await jscodeshift(transformerPath, [sourceSelected || ''], args)
 
-      results.push(jscodeshiftProcess)
+      await jscodeshift(transformerPath, [resolve(sourceSelected)], args)
     }
-
-    return results
   } catch (err) {
     console.log(err)
   }
