@@ -15,23 +15,8 @@ export const TRANSFORM_OPTIONS = [
     version: '5.0.0',
   },
   {
-    description: 'Reverse param order for "redirect" method',
-    value: 'redirect',
-    version: '5.0.0',
-  },
-  {
     description: 'Change request.param() to dedicated methods',
     value: 'req-param',
-    version: '5.0.0',
-  },
-  {
-    description: 'Convert method name "sendfile" to "sendFile"',
-    value: 'send-file',
-    version: '5.0.0',
-  },
-  {
-    description: 'Convert method name "del" to "delete"',
-    value: 'full-name-delete',
     version: '5.0.0',
   },
 ]

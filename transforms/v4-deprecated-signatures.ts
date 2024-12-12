@@ -1,5 +1,5 @@
 import type { API, ASTPath, FileInfo } from 'jscodeshift'
-import { CallExpression, callExpression, identifier, memberExpression, withParser } from 'jscodeshift'
+import { CallExpression, Identifier, callExpression, identifier, memberExpression, withParser } from 'jscodeshift'
 import { recursiveParent } from '../utils/recursiveParent'
 
 const separateStatusAndBody = (path: ASTPath<CallExpression>, calleePropertyName: string) => {
@@ -88,6 +88,44 @@ export default function transformer(file: FileInfo, _api: API): string {
 
       if (pathArguments.length === 2) {
         separateStatusAndBody(path, 'jsonp')
+      }
+
+      return path
+    })
+
+  parsedFile
+    .find(Identifier, {
+      name: 'del',
+    })
+    .replaceWith(() => identifier('delete'))
+
+  parsedFile
+    .find(CallExpression, {
+      callee: {
+        property: {
+          name: 'sendfile',
+        },
+      },
+    })
+    .map((path) => {
+      if (path.node.callee.type === 'MemberExpression' && path.node.callee.property.type === 'Identifier') {
+        path.node.callee.property.name = 'sendFile'
+      }
+
+      return path
+    })
+
+  parsedFile
+    .find(CallExpression, {
+      callee: {
+        property: {
+          name: 'redirect',
+        },
+      },
+    })
+    .map((path) => {
+      if (path.value.arguments.length === 2) {
+        path.value.arguments.reverse()
       }
 
       return path
