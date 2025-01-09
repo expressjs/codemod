@@ -14,7 +14,8 @@ import { recursiveParent } from '../utils/recursiveParent'
 
 const unifiedMagicString = (path: ASTPath<CallExpression>, projectRequestName: string) => {
   const pathArguments = path.value.arguments
-  if (pathArguments.length === 1 && pathArguments[0].type === 'StringLiteral' && pathArguments[0].value === 'back') {
+
+  if (pathArguments.length === 1 && pathArguments[0]?.type === 'StringLiteral' && pathArguments[0].value === 'back') {
     path.value.arguments = [
       logicalExpression(
         '||',
@@ -39,6 +40,7 @@ export default function transformer(file: FileInfo, _api: API) {
       },
     })
     .map((path) => unifiedMagicString(path, recursiveParent(path.parentPath) || 'req'))
+
   parsedFile
     .find(CallExpression, {
       callee: {

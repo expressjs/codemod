@@ -7,9 +7,9 @@ export const recursiveParent = (
   paramIndex = 0,
   parentExpressionType = defaultParentExpressionType,
 ): string | null => {
-  if (parentExpressionType.some((type) => parent.value.type === type)) {
+  if (parentExpressionType.some((type) => parent.value?.type === type)) {
     const foundNode = parent.value as unknown as ArrowFunctionExpression | FunctionExpression
-    if (foundNode.params[paramIndex].type === 'Identifier') {
+    if (foundNode.params[paramIndex]?.type === 'Identifier') {
       return foundNode.params[paramIndex].name
     }
     return null
