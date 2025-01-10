@@ -1,7 +1,6 @@
 # @expressjs/codemod
 
 [![NPM Version][npm-version-image]][npm-url]
-[![NPM Install Size][npm-install-size-image]][npm-install-size-url]
 [![NPM Downloads][npm-downloads-image]][npm-downloads-url]
 [![OpenSSF Scorecard Badge][ossf-scorecard-badge]][ossf-scorecard-visualizer]
 
@@ -81,8 +80,6 @@ See the [Contributing Guide](https://github.com/expressjs/express/blob/master/Co
 
 [npm-downloads-image]: https://badgen.net/npm/dm/@expressjs/codemod
 [npm-downloads-url]: https://npmcharts.com/compare/@expressjs/codemod?minimal=true
-[npm-install-size-image]: https://badgen.net/packagephobia/install/@expressjs/codemod
-[npm-install-size-url]: https://packagephobia.com/result?p=@expressjs/codemod
 [npm-url]: https://npmjs.org/package/@expressjs/codemod
 [npm-version-image]: https://badgen.net/npm/v/@expressjs/codemod
 [ossf-scorecard-badge]: https://api.scorecard.dev/projects/github.com/expressjs/codemod/badge
