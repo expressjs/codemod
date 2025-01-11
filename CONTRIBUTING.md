@@ -34,10 +34,10 @@ git checkout -b name-of-your-branch
 npm ci # installs this project's dependencies
 npm run dev # starts a development environment
 ```
-9. Perform your changes
-10. Ensure your code is linted by running `npm run lint` -- fix any issue you
+8. Perform your changes
+9. Ensure your code is linted by running `npm run lint` -- fix any issue you
    see listed.
-11. If the tests pass, you can commit your changes to your fork and then create
+10. If the tests pass, you can commit your changes to your fork and then create
    a pull request from there. Make sure to reference your issue from the pull
    request comments by including the issue number e.g. `#123`.
 
