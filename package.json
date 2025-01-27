@@ -3,18 +3,21 @@
   "private": true,
   "version": "0.0.1",
   "description": "Codemods for updating express servers.",
-  "main": "build/index.js",
   "contributors": ["Sebastian Beltran <bjohansebas@gmail.com>", "Filip Kudla <filip.kudla.dev@gmail.com>"],
   "license": "MIT",
-  "bin": "build/index.js",
-  "files": ["build/transforms/*.js", "build/commands/*.js", "build/utils/*.js", "build/config.js", "build/index.js"],
+  "bin": {
+    "express-codemod": "build/index.js"
+  },
+  "files": ["build/**/*.js"],
   "scripts": {
+    "clean": "rm -rf build",
     "dev": "tsc -d -w -p tsconfig.json",
     "build": "tsc -d -p tsconfig.json",
     "lint": "biome check",
     "lint:fix": "biome check --fix",
     "test": "jest",
-    "test:ci": "jest --ci"
+    "test:ci": "jest --ci",
+    "prepublishOnly": "npm run clean && npm run build"
   },
   "dependencies": {
     "commander": "^12.1.0",
