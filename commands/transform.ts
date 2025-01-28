@@ -4,6 +4,20 @@ import { run as jscodeshift } from 'jscodeshift/src/Runner'
 import { bold } from 'picocolors'
 import prompts from 'prompts'
 import { TRANSFORM_OPTIONS } from '../config'
+import { checkGitStatus } from '../utils/git'
+
+const ignorePaths =
+  process.env.NODE_ENV === 'test'
+    ? '**/node_modules/**'
+    : [
+        '**/node_modules/**',
+        '**/dist/**',
+        '**/build/**',
+        '**/*.test.*',
+        '**/*.spec.*',
+        '**/__tests__/**',
+        '**/__mocks__/**',
+      ]
 
 export function onCancel() {
   console.info('> Cancelled process. Program will stop now without any actions. \n')
@@ -62,13 +76,17 @@ export async function transform(codemodName?: string, source?: string, options?:
     process.exit(1)
   }
 
+  if (!options?.dry) {
+    checkGitStatus(sourceSelected)
+  }
+
   const transformerPath = join(transformerDirectory, `${codemodSelected}.js`)
 
   const args: Options = {
     ...options,
     verbose: options?.verbose ? 2 : 0,
     babel: false,
-    ignorePattern: '**/node_modules/**',
+    ignorePattern: ignorePaths,
     extensions: 'cts,mts,ts,js,mjs,cjs',
   }
 
