@@ -1,4 +1,5 @@
 import { run } from 'jscodeshift/src/Runner'
+import prompts from 'prompts'
 import { upgrade } from '../upgrade'
 
 jest.mock('jscodeshift/src/Runner', () => ({
@@ -10,7 +11,41 @@ describe('interactive mode', () => {
     jest.clearAllMocks()
   })
 
-  it.todo('runs without source params provided and select is true')
+  it('runs without source params provided and select is true', async () => {
+    const spyOnConsole = jest.spyOn(console, 'log').mockImplementation()
+
+    prompts.inject([['magic-redirect', 'req-param']])
+
+    await upgrade('__testfixtures__', { select: true })
+
+    expect(spyOnConsole).toHaveBeenCalled()
+    expect(spyOnConsole).toHaveBeenCalledTimes(3)
+    expect(run).toHaveBeenCalledTimes(2)
+  })
+
+  it('runs with source params provided and select is true', async () => {
+    const spyOnConsole = jest.spyOn(console, 'log').mockImplementation()
+
+    prompts.inject([['magic-redirect', 'req-param']])
+
+    await upgrade('__testfixtures__', { select: true })
+
+    expect(spyOnConsole).toHaveBeenCalled()
+    expect(spyOnConsole).toHaveBeenCalledTimes(3)
+    expect(run).toHaveBeenCalledTimes(2)
+  })
+
+  it('runs without source params provided and select is undefined', async () => {
+    const spyOnConsole = jest.spyOn(console, 'log').mockImplementation()
+
+    prompts.inject(['__testfixtures__'])
+
+    await upgrade(undefined)
+
+    expect(spyOnConsole).toHaveBeenCalled()
+    expect(spyOnConsole).toHaveBeenCalledTimes(5)
+    expect(run).toHaveBeenCalledTimes(4)
+  })
 })
 
 describe('Non-Interactive Mode', () => {
@@ -24,6 +59,8 @@ describe('Non-Interactive Mode', () => {
     await upgrade('__testfixtures__')
 
     expect(spyOnConsole).toHaveBeenCalled()
+    expect(spyOnConsole).toHaveBeenCalledTimes(5)
+    expect(spyOnConsole).toHaveBeenLastCalledWith('\n> All codemods have been applied successfully. \n')
     expect(run).toHaveBeenCalledTimes(4)
   })
 })
