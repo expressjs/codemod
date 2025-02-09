@@ -32,12 +32,16 @@ Use `@expressjs/codemod -h` to explore available command-line options.
 Usage: @expressjs/codemod [codemod] [source] [options]
 
 Options:
-  -v, --version  Output the current version of @expressjs/codemod.
-  -d, --dry      Dry run (no changes are made to files)
-  -p, --print    Print transformed files to stdout
-  --verbose      Show more information about the transform process
-  --silent       Don't print anything to stdout
-  -h, --help     Display this help message.
+  -v, --version               Output the current version of @expressjs/codemod.
+  -d, --dry                   Dry run (no changes are made to files)
+  -p, --print                 Print transformed files to stdout
+  --verbose                   Show more information about the transform process
+  --silent                    Don't print anything to stdout
+  -h, --help                  Display this help message.
+
+Commands:
+  upgrade [options] [source]  Upgrade your express server to the latest
+                              version.
 ```
 
 <!-- USAGE END -->
