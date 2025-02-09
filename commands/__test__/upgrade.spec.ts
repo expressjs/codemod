@@ -58,8 +58,11 @@ describe('Non-Interactive Mode', () => {
 
     await upgrade('__testfixtures__')
 
-    expect(spyOnConsole).toHaveBeenCalled()
     expect(spyOnConsole).toHaveBeenCalledTimes(5)
+    expect(spyOnConsole).toHaveBeenCalledWith('> Applying codemod: magic-redirect')
+    expect(spyOnConsole).toHaveBeenCalledWith('> Applying codemod: pluralized-methods')
+    expect(spyOnConsole).toHaveBeenCalledWith('> Applying codemod: req-param')
+    expect(spyOnConsole).toHaveBeenCalledWith('> Applying codemod: v4-deprecated-signatures')
     expect(spyOnConsole).toHaveBeenLastCalledWith('\n> All codemods have been applied successfully. \n')
     expect(run).toHaveBeenCalledTimes(4)
   })
