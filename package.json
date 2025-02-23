@@ -8,6 +8,11 @@
   "bin": {
     "express-codemod": "build/index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/expressjs/codemod.git"
+  },
+  "keywords": ["codemods", "express"],
   "files": ["build/**/*.js"],
   "scripts": {
     "clean": "rm -rf build",
