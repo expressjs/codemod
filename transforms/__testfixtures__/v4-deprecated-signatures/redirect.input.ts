@@ -12,5 +12,13 @@ app.get("/", function (req, response) {
 });
 
 app.get("/", function (req, res) {
+  res.redirect(301, "/other-page");
+});
+
+app.get("/", function (req, res) {
+  res.redirect("/other-page");
+});
+
+app.get("/", function (req, res) {
   redirect(301, "/other-page");
 });
