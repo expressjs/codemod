@@ -124,8 +124,11 @@ export default function transformer(file: FileInfo, _api: API): string {
       },
     })
     .map((path) => {
-      if (path.value.arguments.length === 2) {
-        path.value.arguments.reverse()
+      const args = path.value.arguments
+
+      // if its already in the correct order, dont reverse
+      if (args.length === 2 && args[0]?.type !== 'NumericLiteral') {
+        args.reverse()
       }
 
       return path
