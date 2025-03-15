@@ -2,6 +2,14 @@ import express from "express";
 
 const app = express();
 
+app.get('/send/:query', function(req, res){
+  var query = req.params.query;
+  db.smembers(query, function(err, vals){
+    if (err) return res.send(500);
+    res.send(vals);
+  });
+});
+
 app.get("/send", function (req, res) {
     res.send(200, { hello: "world" });
 });
