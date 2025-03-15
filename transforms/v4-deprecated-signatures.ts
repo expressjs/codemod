@@ -1,5 +1,5 @@
 import type { API, ASTPath, FileInfo } from 'jscodeshift'
-import { CallExpression, Identifier, callExpression, identifier, memberExpression, withParser } from 'jscodeshift'
+import { CallExpression, callExpression, identifier, memberExpression, withParser } from 'jscodeshift'
 import { recursiveParent } from '../utils/recursiveParent'
 
 const separateStatusAndBody = (path: ASTPath<CallExpression>, calleePropertyName: string) => {
@@ -94,10 +94,25 @@ export default function transformer(file: FileInfo, _api: API): string {
     })
 
   parsedFile
-    .find(Identifier, {
-      name: 'del',
+    .find(CallExpression, {
+      callee: {
+        property: {
+          name: 'del',
+        },
+      },
     })
-    .replaceWith(() => identifier('delete'))
+    .map((path) => {
+      const pathArguments = path.node.arguments
+
+      if (pathArguments[0].type === 'ArrowFunctionExpression' || pathArguments[0].type === 'FunctionExpression')
+        return path
+
+      if (path.node.callee.type === 'MemberExpression' && path.node.callee.property.type === 'Identifier') {
+        path.node.callee.property.name = 'delete'
+      }
+
+      return path
+    })
 
   parsedFile
     .find(CallExpression, {
