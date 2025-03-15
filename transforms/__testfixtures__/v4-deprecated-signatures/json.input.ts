@@ -2,6 +2,20 @@ import express from "express";
 
 const app = express();
 
+app.get("/json", function (...arg) {
+    const [, res] = arg
+    res.json();
+});
+
+app.get("/json", function (...arg) {
+    const [, res] = arg
+    res.json({ user: "Username", isValid: true }, 200);
+});
+
+app.get("/json", function (req, res) {
+    res.json();
+});
+
 app.get("/json", function (req, res) {    
     res.json({ user: "Username", isValid: true }, 200);
 });

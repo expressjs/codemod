@@ -2,6 +2,20 @@ import express from "express";
 
 const app = express();
 
+app.get("/send", function (...arg) {
+    const [, res] = arg
+    res.send();
+});
+
+app.get("/send", function (...arg) {
+    const [, res] = arg
+    res.status(200).send(true);
+});
+
+app.get("/send", function (req, res) {
+    res.send();
+});
+
 app.get("/send", function (req, res) {
     res.status(200).send({ hello: "world" });
 });
