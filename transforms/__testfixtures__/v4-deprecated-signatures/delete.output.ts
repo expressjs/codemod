@@ -16,6 +16,12 @@ app.delete("/old", () => {
   myImportantLogic();
 });
 
+function noModify() {
+  let a
+
+  app.del(a)
+}
+
 const myImportantLogic = () => {
   console.log("making sure it's there");
 };
