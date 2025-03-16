@@ -2,6 +2,10 @@ import express from "express";
 
 const app = express();
 
+app.get("/json", function (req, res) {
+    res.json();
+});
+
 app.get("/jsonp", function (req, res) {
     res.jsonp({ user: "Username", isValid: true }, 200);
 });

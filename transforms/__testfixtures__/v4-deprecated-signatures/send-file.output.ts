@@ -23,6 +23,14 @@ const sharedSendFile = (res, next, fileName) => {
 }
 
 app.get('/file/:name', (req, res, next) => {
+  res.sendFile()
+})
+
+app.get('/file/:name', (req, res, next) => {
+  res.sendFile("file.txt")
+})
+
+app.get('/file/:name', (req, res, next) => {
   const fileName = req.params.name
 
   res.sendFile(fileName, options, (err) => {

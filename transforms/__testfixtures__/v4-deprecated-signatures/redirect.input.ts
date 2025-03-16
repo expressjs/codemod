@@ -3,6 +3,20 @@ import { redirect } from "somelibrary";
 
 const app = express();
 
+app.get("/", function (...arg) {
+  const [, res] = arg
+  res.redirect();
+});
+
+app.get("/", function (...arg) {
+  const [, res] = arg
+  res.redirect("/other-page", 301);
+});
+
+app.get("/", function (req, res) {
+  res.redirect();
+});
+
 app.get("/", function (req, res) {
   res.redirect("/other-page", 301);
 });
