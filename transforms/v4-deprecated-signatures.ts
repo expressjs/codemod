@@ -104,7 +104,11 @@ export default function transformer(file: FileInfo, _api: API): string {
     .map((path) => {
       const pathArguments = path.node.arguments
 
-      if (pathArguments[0].type === 'ArrowFunctionExpression' || pathArguments[0].type === 'FunctionExpression')
+      if (
+        pathArguments[0].type !== 'RegExpLiteral' &&
+        pathArguments[0].type !== 'StringLiteral' &&
+        pathArguments[0].type !== 'ArrayExpression'
+      )
         return path
 
       if (path.node.callee.type === 'MemberExpression' && path.node.callee.property.type === 'Identifier') {

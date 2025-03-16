@@ -4,6 +4,18 @@ const app = express();
 
 app.get("/", (req, res) => {});
 
+app.del([""],() => {
+  myImportantLogic();
+});
+
+app.del([],() => {
+  myImportantLogic();
+});
+
+app.del(/d/,() => {
+  myImportantLogic();
+});
+
 app.del(() => {
   myImportantLogic();
 });
