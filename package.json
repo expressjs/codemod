@@ -1,6 +1,6 @@
 {
   "name": "@expressjs/codemod",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Codemods for updating express servers.",
   "contributors": ["Sebastian Beltran <bjohansebas@gmail.com>", "Filip Kudla <filip.kudla.dev@gmail.com>"],
   "license": "MIT",
