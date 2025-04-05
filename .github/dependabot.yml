@@ -7,6 +7,7 @@ updates:
 
   - package-ecosystem: npm
     directory: /
+    versioning-strategy: increase
     schedule:
       interval: monthly
       time: "23:00"
