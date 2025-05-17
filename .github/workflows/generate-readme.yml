@@ -9,6 +9,9 @@ on:
       - index.ts
       - config.ts
 
+permissions:
+  contents: read
+
 jobs:
   generate-readme:
     runs-on: ubuntu-latest
