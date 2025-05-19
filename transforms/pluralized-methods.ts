@@ -1,6 +1,7 @@
 import type { API, FileInfo } from 'jscodeshift'
 import { Identifier, identifier } from 'jscodeshift'
 import { getParsedFile } from '../utils/parse'
+import { getOptions } from '../utils/recastOptions'
 
 export default function transformer(file: FileInfo, _api: API): string {
   const parsedFile = getParsedFile(file)
@@ -17,5 +18,5 @@ export default function transformer(file: FileInfo, _api: API): string {
       .replaceWith(() => identifier(plural))
   }
 
-  return parsedFile.toSource()
+  return parsedFile.toSource(getOptions(file.source))
 }
