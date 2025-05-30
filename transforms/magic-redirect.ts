@@ -10,8 +10,8 @@ import {
   memberExpression,
 } from 'jscodeshift'
 import { getParsedFile } from '../utils/parse'
-import { recursiveParent } from '../utils/recursiveParent'
 import { getOptions } from '../utils/recastOptions'
+import { recursiveParent } from '../utils/recursiveParent'
 
 const unifiedMagicString = (path: ASTPath<CallExpression>, projectRequestName: string) => {
   const pathArguments = path.value.arguments

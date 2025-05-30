@@ -1,7 +1,7 @@
 import type { API, ASTPath, FileInfo } from 'jscodeshift'
 import { CallExpression, callExpression, identifier, memberExpression, withParser } from 'jscodeshift'
-import { recursiveParent } from '../utils/recursiveParent'
 import { getOptions } from '../utils/recastOptions'
+import { recursiveParent } from '../utils/recursiveParent'
 
 const separateStatusAndBody = (path: ASTPath<CallExpression>, calleePropertyName: string) => {
   const pathArguments = path.node.arguments
