@@ -10,6 +10,7 @@ import {
   memberExpression,
 } from 'jscodeshift'
 import { getParsedFile } from '../utils/parse'
+import { getOptions } from '../utils/recastOptions'
 import { recursiveParent } from '../utils/recursiveParent'
 
 const unifiedMagicString = (path: ASTPath<CallExpression>, projectRequestName: string) => {
@@ -51,5 +52,5 @@ export default function transformer(file: FileInfo, _api: API) {
     })
     .map((path) => unifiedMagicString(path, recursiveParent(path.parentPath) || 'req'))
 
-  return parsedFile.toSource()
+  return parsedFile.toSource(getOptions(file.source))
 }
