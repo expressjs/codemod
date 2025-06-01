@@ -1,5 +1,6 @@
 import type { API, ASTPath, FileInfo } from 'jscodeshift'
 import { CallExpression, callExpression, identifier, memberExpression, withParser } from 'jscodeshift'
+import { getOptions } from '../utils/recastOptions'
 import { recursiveParent } from '../utils/recursiveParent'
 
 const separateStatusAndBody = (path: ASTPath<CallExpression>, calleePropertyName: string) => {
@@ -153,5 +154,5 @@ export default function transformer(file: FileInfo, _api: API): string {
       return path
     })
 
-  return parsedFile.toSource()
+  return parsedFile.toSource(getOptions(file.source))
 }

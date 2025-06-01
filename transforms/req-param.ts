@@ -1,5 +1,6 @@
 import type { API, FileInfo } from 'jscodeshift'
 import { CallExpression, identifier, memberExpression, withParser } from 'jscodeshift'
+import { getOptions } from '../utils/recastOptions'
 import { recursiveParent } from '../utils/recursiveParent'
 
 export default function transformer(file: FileInfo, _api: API): string {
@@ -40,5 +41,5 @@ export default function transformer(file: FileInfo, _api: API): string {
 
       return path
     })
-    .toSource()
+    .toSource(getOptions(file.source))
 }
