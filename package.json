@@ -11,6 +11,10 @@
     "type": "git",
     "url": "git+https://github.com/expressjs/codemod.git"
   },
+  "funding": {
+    "type": "opencollective",
+    "url": "https://opencollective.com/express"
+  },
   "keywords": ["codemods", "express"],
   "files": ["build"],
   "scripts": {
