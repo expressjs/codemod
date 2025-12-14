@@ -71,7 +71,12 @@ jobs:
           echo "Node.js version: $(node -v)"
           echo "NPM version: $(npm -v)"
 
-      - name: Run tests
+      - name: Run tests-legacy cli
         shell: bash
         run: |
-          npm run test:ci
+          npm run test-legacy:ci
+
+      - name: Run test
+        shell: bash
+        run: |
+          npm run test
