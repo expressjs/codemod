@@ -1,0 +1,24 @@
+schema_version: "1.0"
+name: "@expressjs/magic-redirect"
+version: "1.0.0"
+description: Migrates usage of the legacy APIs `res.redirect('back')` and `res.location('back')` to the current recommended approaches
+author: bjohansebas (Sebastian Beltran)
+license: MIT
+workflow: workflow.yaml
+category: migration
+
+targets:
+  languages:
+    - javascript
+    - typescript
+
+keywords:
+  - transformation
+  - migration
+  - express
+  - redirect
+  - location
+
+registry:
+  access: public
+  visibility: public
