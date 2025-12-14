@@ -6,21 +6,39 @@ async function transform(root: SgRoot<Js>): Promise<string> {
 
   // Helper function to find the request parameter name
   function findRequestParamName(node: any): string {
-    // Start from the call expression and traverse up to find function parameters
     let current = node
+    const funcKinds = new Set([
+      'function_declaration',
+      'function_expression',
+      'function',
+      'arrow_function',
+      'method_definition',
+    ])
+
     while (current) {
       const parent = current.parent()
       if (!parent) break
-      // Check if we're in a function declaration or arrow function
-      if (parent.kind() === 'function_declaration' || parent.kind() === 'arrow_function') {
-        const params = parent.field('parameters')
 
-        if (params && params.children().length > 0) {
-          const firstParam = params.children()[1]
-          if (firstParam.kind() === 'required_parameter') {
-            const pattern = firstParam.field('pattern')
-            if (pattern && pattern.kind() === 'identifier') {
-              return pattern.text()
+      const kind = parent?.kind()
+      if (kind && funcKinds.has(kind)) {
+        const candidateFields = ['parameters', 'parameter', 'formal_parameters', 'params']
+        let params: any = null
+
+        for (const f of candidateFields) {
+          params = parent?.field(f)
+          if (params) break
+        }
+
+        if (params) {
+          const children = typeof params.children === 'function' ? params.children() : []
+          if (children && children.length > 0) {
+            const first = children[1]
+
+            if (first?.kind() === 'required_parameter') {
+              const pattern = first?.field('pattern')
+              if (pattern && typeof pattern.kind === 'function' && pattern.kind() === 'identifier') {
+                return pattern.text()
+              }
             }
           }
         }
@@ -28,6 +46,7 @@ async function transform(root: SgRoot<Js>): Promise<string> {
 
       current = parent
     }
+
     return 'req' // default fallback
   }
 
