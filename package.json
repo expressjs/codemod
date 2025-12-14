@@ -47,7 +47,5 @@
   "engines": {
     "node": ">=18"
   },
-  "workspaces": [
-    "./recipes/*"
-  ]
+  "workspaces": ["./recipes/*"]
 }
