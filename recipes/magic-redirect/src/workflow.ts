@@ -9,7 +9,7 @@ function getStringLiteralValue(node: SgNode<Js>): string | null {
   return fragments[0]?.text() ?? null
 }
 
-function findParentFunctionParameters(node: SgNode<Js>): SgNode<Js, "formal_parameters"> | null {
+function findParentFunctionParameters(node: SgNode<Js>): SgNode<Js, 'formal_parameters'> | null {
   let parent = node.parent()
   while (parent) {
     if (parent.is('formal_parameters')) return parent
@@ -27,7 +27,7 @@ async function transform(root: SgRoot<Js>): Promise<string | null> {
     },
     constraints: {
       METHOD: { regex: '^(redirect|location)$' },
-      ARG: { pattern: { context: "'back'", strictness: "relaxed" } },
+      ARG: { pattern: { context: "'back'", strictness: 'relaxed' } },
     },
   })
 
@@ -42,16 +42,16 @@ async function transform(root: SgRoot<Js>): Promise<string | null> {
 
     const objDef = obj.definition({ resolveExternal: false })
     if (!objDef) continue
-    
+
     const isParameter = objDef.node.matches({
-      rule: { inside: { kind: "formal_parameters", stopBy: "end" } },
+      rule: { inside: { kind: 'formal_parameters', stopBy: 'end' } },
     })
     if (!isParameter) continue
 
     const parameters = findParentFunctionParameters(objDef.node)
     if (!parameters) continue
 
-    const firstParameter = parameters.find({ rule: { kind: "identifier" } })
+    const firstParameter = parameters.find({ rule: { kind: 'identifier' } })
     if (!firstParameter) continue
 
     const requestName = firstParameter.text()
