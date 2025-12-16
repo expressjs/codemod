@@ -1,5 +1,5 @@
 schema_version: "1.0"
-name: "@expressjs/magic-redirect"
+name: "@expressjs/back-redirect-deprecated"
 version: "1.0.0"
 description: Migrates usage of the legacy APIs `res.redirect('back')` and `res.location('back')` to the current recommended approaches
 author: bjohansebas (Sebastian Beltran)

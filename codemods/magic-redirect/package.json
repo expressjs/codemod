@@ -1,5 +1,5 @@
 {
-  "name": "@expressjs/magic-redirect",
+  "name": "@expressjs/back-redirect-deprecated",
   "private": true,
   "version": "1.0.0",
   "description": "Migrates usage of the legacy APIs `res.redirect('back')` and `res.location('back')`.",
@@ -10,12 +10,12 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/expressjs/codemod.git",
-    "directory": "recipes/magic-redirect",
+    "directory": "codemods/back-redirect-deprecated",
     "bugs": "https://github.com/expressjs/codemod/issues"
   },
   "author": "bjohansebas (Sebastian Beltran)",
   "license": "MIT",
-  "homepage": "https://github.com/expressjs/codemod/blob/main/recipes/magic-redirect/README.md",
+  "homepage": "https://github.com/expressjs/codemod/blob/main/codemods/back-redirect-deprecated/README.md",
   "devDependencies": {
     "@codemod.com/jssg-types": "^1.3.1"
   }
