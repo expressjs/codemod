@@ -1,0 +1,26 @@
+schema_version: "1.0"
+name: "@expressjs/pluralize-deprecated-methods"
+version: "1.0.0"
+description: Migrates usage of deprecated singular request methods to their pluralized versions in Express.js applications.
+author: bjohansebas (Sebastian Beltran)
+license: MIT
+workflow: workflow.yaml
+category: migration
+
+targets:
+  languages:
+    - javascript
+    - typescript
+
+keywords:
+  - transformation
+  - migration
+  - express
+  - accepts
+  - accepetsCharsets
+  - acceptsEncodings
+  - acceptsLanguages
+
+registry:
+  access: public
+  visibility: public
