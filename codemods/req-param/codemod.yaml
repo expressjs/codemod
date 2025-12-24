@@ -1,0 +1,23 @@
+schema_version: "1.0"
+name: "@expressjs/req-param"
+version: "1.0.0"
+description:  Migrates usage of the legacy APIs `req.param('body')`, `req.param('query')` and `req.param('params')` to the current recommended approaches
+author: bjohansebas (Sebastian Beltran)
+license: MIT
+workflow: workflow.yaml
+category: migration
+
+targets:
+  languages:
+    - javascript
+    - typescript
+
+keywords:
+  - transformation
+  - migration
+  - express
+  - params
+
+registry:
+  access: public
+  visibility: public

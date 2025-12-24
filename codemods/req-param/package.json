@@ -1,0 +1,22 @@
+{
+  "name": "@expressjs/req-param",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Migrates usage of the legacy APIs `req.param('body')`, `req.param('query')` and `req.param('params')` to the current recommended approaches.",
+  "type": "module",
+  "scripts": {
+    "test": "npx codemod jssg test -l typescript ./src/workflow.ts ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/expressjs/codemod.git",
+    "directory": "codemods/req-param",
+    "bugs": "https://github.com/expressjs/codemod/issues"
+  },
+  "author": "bjohansebas (Sebastian Beltran)",
+  "license": "MIT",
+  "homepage": "https://github.com/expressjs/codemod/blob/main/codemods/req-param/README.md",
+  "devDependencies": {
+    "@codemod.com/jssg-types": "^1.3.1"
+  }
+}
