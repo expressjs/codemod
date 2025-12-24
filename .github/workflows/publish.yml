@@ -59,7 +59,7 @@ jobs:
           VERSION="${TAG%@*}"      # Everything before @
           VERSION="${VERSION#v}"   # Remove v prefix
           CODEMOD_NAME="${TAG#*@}" # Everything after @
-          CODEMOD_PATH="recipes/$CODEMOD_NAME"
+          CODEMOD_PATH="codemods/$CODEMOD_NAME"
 
           # Set outputs
           echo "version=$VERSION" >> $GITHUB_OUTPUT
@@ -72,8 +72,8 @@ jobs:
         run: |
           if [[ ! -d "$CODEMOD_PATH" ]]; then
             echo "❌ Codemod directory not found: $CODEMOD_PATH"
-            echo "Available directories in recipes/:"
-            ls -lah recipes/ || echo "No recipes directory found"
+            echo "Available directories in codemods/:"
+            ls -lah codemods/ || echo "No codemods directory found"
             exit 1
           fi
 

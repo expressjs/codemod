@@ -23,8 +23,9 @@
     "build": "tsc -d -p tsconfig.json",
     "lint": "biome check",
     "lint:fix": "biome check --fix",
-    "test": "jest",
-    "test:ci": "jest --ci",
+    "test": "npm run test --workspaces --if-present",
+    "test-legacy": "jest",
+    "test-legacy:ci": "jest --ci",
     "prepublishOnly": "npm run clean && npm run build"
   },
   "dependencies": {
@@ -46,5 +47,6 @@
   },
   "engines": {
     "node": ">=18"
-  }
+  },
+  "workspaces": ["./codemods/*"]
 }

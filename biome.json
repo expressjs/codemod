@@ -6,7 +6,7 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignore": ["__testfixtures__"]
+    "ignore": ["__testfixtures__", "tests"]
   },
   "linter": {
     "enabled": true,
@@ -15,6 +15,9 @@
       "correctness": {
         "noUnusedImports": "error",
         "useExhaustiveDependencies": "off"
+      },
+      "suspicious": {
+        "noExplicitAny": "off"
       }
     }
   },
