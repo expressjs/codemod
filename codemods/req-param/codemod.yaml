@@ -1,7 +1,7 @@
 schema_version: "1.0"
 name: "@expressjs/req-param"
 version: "1.0.0"
-description:  Migrates usage of the legacy APIs `req.param('body')`, `req.param('query')` and `req.param('params')` to the current recommended approaches
+description:  Migrates usage of the legacy APIs `req.param(name)` to the current recommended approaches
 author: bjohansebas (Sebastian Beltran)
 license: MIT
 workflow: workflow.yaml

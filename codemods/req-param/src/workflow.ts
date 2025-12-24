@@ -22,7 +22,7 @@ async function transform(root: SgRoot<Js>): Promise<string | null> {
   const rootNode = root.root()
 
   const nodes = rootNode.findAll({
-    rule: {    
+    rule: {
       pattern: '$OBJ.$METHOD($ARG)',
     },
     constraints: {
@@ -35,7 +35,7 @@ async function transform(root: SgRoot<Js>): Promise<string | null> {
   for (const call of nodes) {
     const arg = call.getMatch('ARG')
     const obj = call.getMatch('OBJ')
-    
+
     if (!arg || !obj) continue
     const objDef = obj.definition({ resolveExternal: false })
     if (!objDef) continue
@@ -54,15 +54,11 @@ async function transform(root: SgRoot<Js>): Promise<string | null> {
 
     const argValue = getStringLiteralValue(arg)
 
-    if (argValue === "body") {
+    if (argValue === 'body') {
       edits.push(call.replace(`${requestName}.body`))
-    }
-
-    if(argValue === "query") {
+    } else if (argValue === 'query') {
       edits.push(call.replace(`${requestName}.query`))
-    }
-
-    if(argValue) {
+    } else if (argValue) {
       edits.push(call.replace(`${requestName}.params.${argValue}`))
     }
   }

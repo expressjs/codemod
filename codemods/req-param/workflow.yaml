@@ -9,7 +9,7 @@ nodes:
     runtime:
       type: direct
     steps:
-      - name: Migrates usage of the legacy APIs `req.param('body')`, `req.param('query')` and `req.param('params')` to the current recommended approaches
+      - name: Migrates usage of the legacy APIs `req.param(name)` to the current recommended approaches
         js-ast-grep:
           js_file: src/workflow.ts
           base_path: .

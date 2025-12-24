@@ -2,7 +2,7 @@
   "name": "@expressjs/req-param",
   "private": true,
   "version": "1.0.0",
-  "description": "Migrates usage of the legacy APIs `req.param('body')`, `req.param('query')` and `req.param('params')` to the current recommended approaches.",
+  "description": "Migrates usage of the legacy APIs `req.param(name)` to the current recommended approaches.",
   "type": "module",
   "scripts": {
     "test": "npx codemod jssg test -l typescript ./src/workflow.ts ./"
