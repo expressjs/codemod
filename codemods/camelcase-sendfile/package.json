@@ -1,5 +1,5 @@
 {
-  "name": "@expressjs/sendfile-to-sendfile",
+  "name": "@expressjs/camelcase-sendfile",
   "private": true,
   "version": "1.0.0",
   "description": "Migrates usage of the legacy API `res.sendfile(file)` to `res.sendFile(file)`.",
@@ -10,12 +10,12 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/expressjs/codemod.git",
-    "directory": "codemods/sendfile-to-sendFile",
+    "directory": "codemods/camelcase-sendfile",
     "bugs": "https://github.com/expressjs/codemod/issues"
   },
   "author": "bjohansebas (Sebastian Beltran)",
   "license": "MIT",
-  "homepage": "https://github.com/expressjs/codemod/blob/main/codemods/sendfile-to-sendFile/README.md",
+  "homepage": "https://github.com/expressjs/codemod/blob/main/codemods/camelcase-sendfile/README.md",
   "devDependencies": {
     "@codemod.com/jssg-types": "^1.3.1"
   }

@@ -1,5 +1,5 @@
 schema_version: "1.0"
-name: "@expressjs/sendfile-to-sendFile"
+name: "@expressjs/camelcase-sendfile"
 version: "1.0.0"
 description: Migrates usage of the legacy API `res.sendfile(file)` to `res.sendFile(file)`
 author: bjohansebas (Sebastian Beltran)
