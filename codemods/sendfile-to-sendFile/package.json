@@ -10,12 +10,12 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/expressjs/codemod.git",
-    "directory": "codemods/back-redirect-deprecated",
+    "directory": "codemods/sendfile-to-sendFile",
     "bugs": "https://github.com/expressjs/codemod/issues"
   },
   "author": "bjohansebas (Sebastian Beltran)",
   "license": "MIT",
-  "homepage": "https://github.com/expressjs/codemod/blob/main/codemods/back-redirect-deprecated/README.md",
+  "homepage": "https://github.com/expressjs/codemod/blob/main/codemods/sendfile-to-sendFile/README.md",
   "devDependencies": {
     "@codemod.com/jssg-types": "^1.3.1"
   }
