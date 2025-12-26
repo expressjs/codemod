@@ -1,0 +1,26 @@
+schema_version: "1.0"
+name: "@expressjs/status-send-order"
+version: "1.0.0"
+description: Migrates usage of the legacy APIs `res.send(status)`, `res.send(obj, status)`, `res.json(obj, status)` and `res.jsonp(obj, status)` to the current recommended approaches
+author: bjohansebas (Sebastian Beltran)
+license: MIT
+workflow: workflow.yaml
+category: migration
+
+targets:
+  languages:
+    - javascript
+    - typescript
+
+keywords:
+  - transformation
+  - migration
+  - express
+  - send
+  - json
+  - jsonp
+  - status
+
+registry:
+  access: public
+  visibility: public
