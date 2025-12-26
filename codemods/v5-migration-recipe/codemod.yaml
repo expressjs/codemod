@@ -1,0 +1,25 @@
+schema_version: "1.0"
+name: "@expressjs/v5/migration-recipe"
+version: "1.0.0"
+description: This codemod migration recipe helps you update your Express.js v4 applications to be compatible with Express.js v5 by addressing deprecated APIs.
+author: bjohansebas (Sebastian Beltran)
+license: MIT
+workflow: workflow.yaml
+category: migration
+
+targets:
+  languages:
+    - javascript
+    - typescript
+
+keywords:
+  - transformation
+  - migration
+  - express
+  - v5
+  - v4
+  - legacy
+
+registry:
+  access: public
+  visibility: public
