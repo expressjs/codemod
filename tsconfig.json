@@ -7,7 +7,7 @@
     "downlevelIteration": true,
     "preserveWatchOutput": true,
     "resolveJsonModule": true,
-    "strictNullChecks": true,
+    "strictNullChecks": true
   },
   "include": ["./codemods/"],
   "exclude": ["node_modules", "**/__testfixtures__", "**/__test__", "**/*.spec.ts"]
