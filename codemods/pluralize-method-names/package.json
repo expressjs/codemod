@@ -1,5 +1,5 @@
 {
-  "name": "@expressjs/pluralize-deprecated-methods",
+  "name": "@expressjs/pluralize-method-names",
   "private": true,
   "version": "1.0.0",
   "description": "Migrates usage of deprecated singular request methods to their pluralized versions in Express.js applications.",
@@ -10,12 +10,12 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/expressjs/codemod.git",
-    "directory": "codemods/pluralize-deprecated-methods",
+    "directory": "codemods/pluralize-method-names",
     "bugs": "https://github.com/expressjs/codemod/issues"
   },
   "author": "bjohansebas (Sebastian Beltran)",
   "license": "MIT",
-  "homepage": "https://github.com/expressjs/codemod/blob/main/codemods/pluralize-deprecated-methods/README.md",
+  "homepage": "https://github.com/expressjs/codemod/blob/main/codemods/pluralize-method-names/README.md",
   "devDependencies": {
     "@codemod.com/jssg-types": "^1.3.1"
   }

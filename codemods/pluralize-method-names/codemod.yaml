@@ -1,5 +1,5 @@
 schema_version: "1.0"
-name: "@expressjs/pluralize-deprecated-methods"
+name: "@expressjs/pluralize-method-names"
 version: "1.0.0"
 description: Migrates usage of deprecated singular request methods to their pluralized versions in Express.js applications.
 author: bjohansebas (Sebastian Beltran)
