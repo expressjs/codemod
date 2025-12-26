@@ -1,0 +1,22 @@
+{
+  "name": "@expressjs/redirect-arg-order",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Migrates usage of the legacy APIs `res.redirect(url, status)` to use the recommended argument order `res.redirect(status, url)`.",
+  "type": "module",
+  "scripts": {
+    "test": "npx codemod jssg test -l typescript ./src/workflow.ts ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/expressjs/codemod.git",
+    "directory": "codemods/redirect-arg-order",
+    "bugs": "https://github.com/expressjs/codemod/issues"
+  },
+  "author": "bjohansebas (Sebastian Beltran)",
+  "license": "MIT",
+  "homepage": "https://github.com/expressjs/codemod/blob/main/codemods/redirect-arg-order/README.md",
+  "devDependencies": {
+    "@codemod.com/jssg-types": "^1.3.1"
+  }
+}
