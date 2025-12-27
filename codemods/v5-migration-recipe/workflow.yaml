@@ -27,3 +27,6 @@ nodes:
       - name: Migrates usage of the legacy API `res.sendfile(file)` to `res.sendFile(file)`
         codemod:
           source: "@expressjs/camelcase-sendfile"
+      - name: Migrates usage of the legacy APIs `app.del()` to `app.delete()`
+        codemod:
+          source: "@expressjs/route-del-to-delete"

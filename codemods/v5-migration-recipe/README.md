@@ -10,6 +10,7 @@ Included transformations:
 - **Status Send Order**: Migrates usages of `res.send(status)`, `res.send(obj, status)`, `res.json(obj, status)`, and `res.jsonp(obj, status)` to the recommended argument ordering. Registry entry: [https://app.codemod.com/registry/expressjs/status-send-order](https://app.codemod.com/registry/expressjs/status-send-order).
 - **Redirect Arg Order**: Converts `res.redirect(url, status)` calls to the recommended `res.redirect(status, url)` ordering. Registry entry: [https://app.codemod.com/registry/expressjs/redirect-arg-order](https://app.codemod.com/registry/expressjs/redirect-arg-order).
 - **Camelcase Sendfile**: Replaces legacy `res.sendfile(file)` usages with the camel-cased `res.sendFile(file)` API. Registry entry: [https://app.codemod.com/registry/expressjs/camelcase-sendfile](https://app.codemod.com/registry/expressjs/camelcase-sendfile).
+- **Route Del to Delete**: Migrates usage of the legacy APIs `app.del()` to `app.delete()`. Registry entry: [https://app.codemod.com/registry/expressjs/route-del-to-delete](https://app.codemod.com/registry/expressjs/route-del-to-delete).
 
 ## References
 
