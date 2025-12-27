@@ -61,6 +61,8 @@ Each codemod recides in its own directory inside the `codemods` folder. For init
 npx codemod init codemods/name-of-codemod --name @expressjs/name-of-codemod --description "Brief description of the codemod" --git-repository-url "git+https://github.com/expressjs/codemod.git" --author "your-github-username (Your Name)" --language typescript --project-type ast-grep-js --package-manager npm --license MIT --no-interactive
 ```
 
+Then, rename the `scripts` folder to `src` to keep it consistent with the rest of the repository. After that, you can start implementing your codemod by editing the `codemod.yaml` file and adding any additional files your codemod requires.
+
 ## Useful Resources
 
 - [Codemod CLI Reference](https://docs.codemod.com/cli/cli-reference)
