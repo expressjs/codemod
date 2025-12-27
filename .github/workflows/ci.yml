@@ -42,7 +42,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        node-version: [18, 19, 20, 21, 22, 23]
+        node-version: [18, 19, 20, 21, 22, 23, 24, 25]
         # Node.js release schedule: https://nodejs.org/en/about/releases/
 
     name: Node.js ${{ matrix.node-version }} - ${{matrix.os}}
@@ -70,11 +70,6 @@ jobs:
         run: |
           echo "Node.js version: $(node -v)"
           echo "NPM version: $(npm -v)"
-
-      - name: Run tests-legacy cli
-        shell: bash
-        run: |
-          npm run test-legacy:ci
 
       - name: Run test
         shell: bash

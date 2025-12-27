@@ -7,9 +7,8 @@
     "downlevelIteration": true,
     "preserveWatchOutput": true,
     "resolveJsonModule": true,
-    "strictNullChecks": true,
-    "outDir": "build"
+    "strictNullChecks": true
   },
-  "include": ["**/*.ts", "./codemods/"],
-  "exclude": ["node_modules", "build", "**/__testfixtures__", "**/__test__", "**/*.spec.ts"]
+  "include": ["./codemods/"],
+  "exclude": ["node_modules", "**/__testfixtures__", "**/__test__", "**/*.spec.ts"]
 }
