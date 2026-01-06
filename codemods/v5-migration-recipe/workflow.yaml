@@ -18,7 +18,7 @@ nodes:
       - name: Migrates usage of deprecated singular request methods to their pluralized versions in Express.js applications.
         codemod:
           source: "@expressjs/pluralize-method-names"
-      - name: Migrates usage of the legacy APIs `res.send(status)`, `res.send(obj, status)`, `res.json(obj, status)` and `res.jsonp(obj, status)` to the current recommended approachesç
+      - name: Migrates usage of the legacy APIs `res.send(status)`, `res.send(obj, status)`, `res.json(obj, status)` and `res.jsonp(obj, status)` to the current recommended approaches
         codemod:
           source: "@expressjs/status-send-order"
       - name: Migrates usage of the legacy APIs `res.redirect(url, status)` to use the recommended argument order `res.redirect(status, url)`.
