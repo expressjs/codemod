@@ -5,6 +5,7 @@ description: Migrates usage of the legacy API `res.sendfile(file)` to `res.sendF
 author: bjohansebas (Sebastian Beltran)
 license: MIT
 workflow: workflow.yaml
+repository: "https://github.com/expressjs/codemod/tree/HEAD/codemods/camelcase-sendfile"
 category: migration
 
 targets:
