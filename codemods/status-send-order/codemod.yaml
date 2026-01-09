@@ -5,6 +5,7 @@ description: Migrates usage of the legacy APIs `res.send(status)`, `res.send(obj
 author: bjohansebas (Sebastian Beltran)
 license: MIT
 workflow: workflow.yaml
+repository: "https://github.com/expressjs/codemod/tree/HEAD/codemods/status-send-order"
 category: migration
 
 targets:
