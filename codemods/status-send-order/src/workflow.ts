@@ -13,6 +13,8 @@ async function transform(root: SgRoot<Js>): Promise<string | null> {
     },
   })
 
+  if (!nodes.length) return null
+
   const edits: Edit[] = []
 
   for (const call of nodes) {
@@ -68,7 +70,8 @@ async function transform(root: SgRoot<Js>): Promise<string | null> {
     }
   }
 
-  if (edits.length === 0) return null
+  if (!edits.length) return null
+
   return rootNode.commitEdits(edits)
 }
 
