@@ -1,0 +1,25 @@
+schema_version: "1.0"
+name: "@expressjs/route-del-to-delete"
+version: "1.0.0"
+description: Migrates usage of the legacy APIs `app.del()` to `app.delete()`
+author: bjohansebas (Sebastian Beltran)
+license: MIT
+workflow: workflow.yaml
+repository: "https://github.com/expressjs/codemod/tree/HEAD/codemods/route-del-to-delete"
+category: migration
+
+targets:
+  languages:
+    - javascript
+    - typescript
+
+keywords:
+  - transformation
+  - migration
+  - express
+  - redirect
+  - location
+
+registry:
+  access: public
+  visibility: public
