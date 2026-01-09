@@ -5,6 +5,7 @@ description: Migrates usage of deprecated singular request methods to their plur
 author: bjohansebas (Sebastian Beltran)
 license: MIT
 workflow: workflow.yaml
+repository: "https://github.com/expressjs/codemod/tree/HEAD/codemods/pluralize-method-names"
 category: migration
 
 targets:
