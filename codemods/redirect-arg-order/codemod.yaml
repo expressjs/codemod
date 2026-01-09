@@ -1,0 +1,25 @@
+schema_version: "1.0"
+name: "@expressjs/redirect-arg-order"
+version: "1.0.0"
+description: Migrates usage of the legacy APIs `res.redirect(url, status)` to use the recommended argument order `res.redirect(status, url)`.
+author: bjohansebas (Sebastian Beltran)
+license: MIT
+workflow: workflow.yaml
+repository: "https://github.com/expressjs/codemod/tree/HEAD/codemods/redirect-arg-order"
+category: migration
+
+targets:
+  languages:
+    - javascript
+    - typescript
+
+keywords:
+  - transformation
+  - migration
+  - express
+  - redirect
+  - location
+
+registry:
+  access: public
+  visibility: public
