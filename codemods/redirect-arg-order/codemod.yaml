@@ -5,6 +5,7 @@ description: Migrates usage of the legacy APIs `res.redirect(url, status)` to us
 author: bjohansebas (Sebastian Beltran)
 license: MIT
 workflow: workflow.yaml
+repository: "https://github.com/expressjs/codemod/tree/HEAD/codemods/redirect-arg-order"
 category: migration
 
 targets:
