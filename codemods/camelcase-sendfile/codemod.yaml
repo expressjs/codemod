@@ -1,0 +1,25 @@
+schema_version: "1.0"
+name: "@expressjs/camelcase-sendfile"
+version: "1.0.0"
+description: Migrates usage of the legacy API `res.sendfile(file)` to `res.sendFile(file)`
+author: bjohansebas (Sebastian Beltran)
+license: MIT
+workflow: workflow.yaml
+repository: "https://github.com/expressjs/codemod/tree/HEAD/codemods/camelcase-sendfile"
+category: migration
+
+targets:
+  languages:
+    - javascript
+    - typescript
+
+keywords:
+  - transformation
+  - migration
+  - express
+  - sendFile
+  - files
+
+registry:
+  access: public
+  visibility: public
