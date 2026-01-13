@@ -1,5 +1,5 @@
 {
-  "name": "@expressjs/req-param",
+  "name": "@expressjs/explicit-request-params",
   "private": true,
   "version": "1.0.0",
   "description": "Migrates usage of the legacy APIs `req.param(name)` to the current recommended approaches.",
@@ -10,12 +10,12 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/expressjs/codemod.git",
-    "directory": "codemods/req-param",
+    "directory": "codemods/explicit-request-params",
     "bugs": "https://github.com/expressjs/codemod/issues"
   },
   "author": "bjohansebas (Sebastian Beltran)",
   "license": "MIT",
-  "homepage": "https://github.com/expressjs/codemod/blob/main/codemods/req-param/README.md",
+  "homepage": "https://github.com/expressjs/codemod/blob/main/codemods/explicit-request-params/README.md",
   "devDependencies": {
     "@codemod.com/jssg-types": "^1.3.1"
   }
