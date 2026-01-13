@@ -1,0 +1,22 @@
+{
+  "name": "@expressjs/route-del-to-delete",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Migrates usage of the legacy APIs `app.del` to `app.delete`.",
+  "type": "module",
+  "scripts": {
+    "test": "npx codemod jssg test -l typescript ./src/workflow.ts ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/expressjs/codemod.git",
+    "directory": "codemods/route-del-to-delete",
+    "bugs": "https://github.com/expressjs/codemod/issues"
+  },
+  "author": "bjohansebas (Sebastian Beltran)",
+  "license": "MIT",
+  "homepage": "https://github.com/expressjs/codemod/blob/main/codemods/route-del-to-delete/README.md",
+  "devDependencies": {
+    "@codemod.com/jssg-types": "^1.3.1"
+  }
+}
