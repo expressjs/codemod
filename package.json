@@ -1,12 +1,9 @@
 {
   "name": "@expressjs/codemod",
-  "version": "0.0.5",
+  "private": "true",
   "description": "Codemods for updating express servers.",
   "contributors": ["Sebastian Beltran <bjohansebas@gmail.com>", "Filip Kudla <filip.kudla.dev@gmail.com>"],
   "license": "MIT",
-  "bin": {
-    "express-codemod": "build/index.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/expressjs/codemod.git"
@@ -16,37 +13,15 @@
     "url": "https://opencollective.com/express"
   },
   "keywords": ["codemods", "express"],
-  "files": ["build"],
   "scripts": {
-    "clean": "rm -rf build",
-    "dev": "tsc -d -w -p tsconfig.json",
-    "build": "tsc -d -p tsconfig.json",
     "lint": "biome check",
     "lint:fix": "biome check --fix",
-    "test": "npm run test --workspaces --if-present",
-    "test-legacy": "jest",
-    "test-legacy:ci": "jest --ci",
-    "prepublishOnly": "npm run clean && npm run build"
-  },
-  "dependencies": {
-    "commander": "^12.1.0",
-    "fast-glob": "^3.3.2",
-    "jscodeshift": "^17.1.1",
-    "picocolors": "^1.1.1",
-    "prompts": "^2.4.2"
+    "test": "npm run test --workspaces --if-present"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "@types/jest": "29.5.14",
-    "@types/jscodeshift": "^0.12.0",
     "@types/node": "^22.19.3",
-    "@types/prompts": "2.4.9",
-    "jest": "29.7.0",
-    "ts-jest": "29.3.4",
     "typescript": "5.9.3"
-  },
-  "engines": {
-    "node": ">=18"
   },
   "workspaces": ["./codemods/*"]
 }
