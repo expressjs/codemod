@@ -1,12 +1,9 @@
 {
   "name": "@expressjs/codemod",
-  "version": "0.0.5",
+  "private": "true",
   "description": "Codemods for updating express servers.",
   "contributors": ["Sebastian Beltran <bjohansebas@gmail.com>", "Filip Kudla <filip.kudla.dev@gmail.com>"],
   "license": "MIT",
-  "bin": {
-    "express-codemod": "build/index.js"
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/expressjs/codemod.git"
@@ -25,9 +22,6 @@
     "@biomejs/biome": "1.9.4",
     "@types/node": "^22.19.3",
     "typescript": "5.9.3"
-  },
-  "engines": {
-    "node": ">=18"
   },
   "workspaces": ["./codemods/*"]
 }
