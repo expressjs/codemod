@@ -1,7 +1,7 @@
 # Migrate legacy `app.del()` to `app.delete()`
 
 Migrates usage of the legacy APIs `app.del()` to `app.delete()`.
-Initially, `del` was used instead of `delete`, because `delete` is a reserved keyword in JavaScript. However, as of ECMAScript 6, `delete` and other reserved keywords can legally be used as property names.
+Initially, `del` was used instead of `delete`, because `delete` is a reserved keyword in JavaScript. However, as of ECMAScript 6, `delete` and other reserved keywords can legally be used as property names. The `app.del()` method was deprecated in Express 4 and removed in Express 5. 
 
 ## Example
 
