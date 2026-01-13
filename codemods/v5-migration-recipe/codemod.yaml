@@ -5,6 +5,7 @@ description: This codemod migration recipe helps you update your Express.js v4 a
 author: bjohansebas (Sebastian Beltran)
 license: MIT
 workflow: workflow.yaml
+repository: "https://github.com/expressjs/codemod/tree/HEAD/codemods/v5-migration-recipe"
 category: migration
 
 targets:
