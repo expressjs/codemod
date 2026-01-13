@@ -14,7 +14,7 @@ nodes:
           source: "@expressjs/back-redirect-deprecated"
       - name: Migrates usage of the legacy APIs `req.param(name)` to the current recommended approaches.
         codemod:
-          source: "@expressjs/req-param"
+          source: "@expressjs/explicit-request-params"
       - name: Migrates usage of deprecated singular request methods to their pluralized versions in Express.js applications.
         codemod:
           source: "@expressjs/pluralize-method-names"
