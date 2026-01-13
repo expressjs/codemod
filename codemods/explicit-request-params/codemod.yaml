@@ -1,0 +1,24 @@
+schema_version: "1.0"
+name: "@expressjs/explicit-request-params"
+version: "1.0.0"
+description:  Migrates usage of the legacy APIs `req.param(name)` to the current recommended approaches
+author: bjohansebas (Sebastian Beltran)
+license: MIT
+workflow: workflow.yaml
+repository: "https://github.com/expressjs/codemod/tree/HEAD/codemods/explicit-request-params"
+category: migration
+
+targets:
+  languages:
+    - javascript
+    - typescript
+
+keywords:
+  - transformation
+  - migration
+  - express
+  - params
+
+registry:
+  access: public
+  visibility: public
