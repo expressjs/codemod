@@ -1,0 +1,19 @@
+{
+  "name": "@expressjs/v5-migration-recipe",
+  "private": true,
+  "version": "1.0.0",
+  "description": "This codemod migration recipe helps you update your Express.js v4 applications to be compatible with Express.js v5 by addressing deprecated APIs.",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/expressjs/codemod.git",
+    "directory": "codemods/v5-migration-recipe",
+    "bugs": "https://github.com/expressjs/codemod/issues"
+  },
+  "author": "bjohansebas (Sebastian Beltran)",
+  "license": "MIT",
+  "homepage": "https://github.com/expressjs/codemod/blob/main/codemods/v5-migration-recipe/README.md",
+  "devDependencies": {
+    "@codemod.com/jssg-types": "^1.3.1"
+  }
+}
