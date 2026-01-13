@@ -1,0 +1,32 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/codemod-com/codemod/refs/heads/main/schemas/workflow.json
+
+version: "1"
+
+nodes:
+  - id: apply-transforms
+    name: Apply AST Transformations
+    type: automatic
+    runtime:
+      type: direct
+    steps:
+      - name: Migrates usage of the legacy APIs `res.redirect('back')` and `res.location('back')` to the current recommended approaches
+        codemod:
+          source: "@expressjs/back-redirect-deprecated"
+      - name: Migrates usage of the legacy APIs `req.param(name)` to the current recommended approaches.
+        codemod:
+          source: "@expressjs/explicit-request-params"
+      - name: Migrates usage of deprecated singular request methods to their pluralized versions in Express.js applications.
+        codemod:
+          source: "@expressjs/pluralize-method-names"
+      - name: Migrates usage of the legacy APIs `res.send(status)`, `res.send(obj, status)`, `res.json(obj, status)` and `res.jsonp(obj, status)` to the current recommended approaches
+        codemod:
+          source: "@expressjs/status-send-order"
+      - name: Migrates usage of the legacy APIs `res.redirect(url, status)` to use the recommended argument order `res.redirect(status, url)`.
+        codemod:
+          source: "@expressjs/redirect-arg-order"
+      - name: Migrates usage of the legacy API `res.sendfile(file)` to `res.sendFile(file)`
+        codemod:
+          source: "@expressjs/camelcase-sendfile"
+      - name: Migrates usage of the legacy APIs `app.del()` to `app.delete()`
+        codemod:
+          source: "@expressjs/route-del-to-delete"
