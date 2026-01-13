@@ -10,7 +10,7 @@ Codemods are transformations that run on your codebase programmatically. This al
 
 ### From Registry
 
-With the codemod CLI you can run a workflow from the Codemod Registry. Replace <codemod> with the name of the codemod you want to run:
+With the codemod CLI you can run a workflow from the Codemod Registry. Replace `<codemod>` with the name of the codemod you want to run:
 
 ```sh
 npx codemod @expressjs/<codemod>
