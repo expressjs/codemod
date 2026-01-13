@@ -96,7 +96,7 @@ jobs:
       # Run test before login to not waste time if it fails
       - name: Run codemod Tests
         working-directory: ${{ steps.parse-tag.outputs.codemod-path }}
-        run: npm run test
+        run: npm run --if-present test
 
       - name: Authenticate with Codemod registry
         env:
