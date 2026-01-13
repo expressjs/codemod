@@ -16,7 +16,7 @@ With the codemod CLI you can run a workflow from the Codemod Registry. Replace `
 npx codemod @expressjs/<codemod>
 ```
 
-For see the list of available codemods, visit the [Express.js Codemod Registry](https://app.codemod.com/registry?q=scope%3Aexpressjs).
+For see the list of available codemods, visit the [Express.js Codemod Registry](https://codemod.link/express).
 
 ### From source
 
