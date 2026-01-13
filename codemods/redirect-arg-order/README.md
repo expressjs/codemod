@@ -1,7 +1,7 @@
 # Migrate legacy `res.redirect(url, status)`
 
 Migrates usage of the legacy APIs `res.redirect(url, status)` to the new signature
-`res.redirect(status, url)`. 
+`res.redirect(status, url)`. This usage was deprecated in Express 4, in Express 5 you must use the new signature `res.redirect(status, url)`.
 
 ## Example
 
