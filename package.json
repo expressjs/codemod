@@ -2,7 +2,10 @@
   "name": "@expressjs/codemod",
   "private": "true",
   "description": "Codemods for updating express servers.",
-  "contributors": ["Sebastian Beltran <bjohansebas@gmail.com>", "Filip Kudla <filip.kudla.dev@gmail.com>"],
+  "contributors": [
+    "Sebastian Beltran <bjohansebas@gmail.com>",
+    "Filip Kudla <filip.kudla.dev@gmail.com>"
+  ],
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -12,16 +15,21 @@
     "type": "opencollective",
     "url": "https://opencollective.com/express"
   },
-  "keywords": ["codemods", "express"],
+  "keywords": [
+    "codemods",
+    "express"
+  ],
   "scripts": {
     "lint": "biome check",
     "lint:fix": "biome check --fix",
     "test": "npm run test --workspaces --if-present"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
+    "@biomejs/biome": "2.0.6",
     "@types/node": "^22.19.3",
     "typescript": "5.9.3"
   },
-  "workspaces": ["./codemods/*"]
+  "workspaces": [
+    "./codemods/*"
+  ]
 }
