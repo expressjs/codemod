@@ -5,7 +5,7 @@ import sendfile from "other-place"
 const app = express();
 const options = {
   root: path.join(__dirname, 'public'),
-  dotfiles: 'deny',
+  dotfiles: 'allow',
   headers: {
     'x-timestamp': Date.now(),
     'x-sent': true

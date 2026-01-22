@@ -9,7 +9,7 @@ app.get("/json", function (...arg) {
 
 app.get("/json", function (...arg) {
     const [, res] = arg
-    res.json({ user: "Username", isValid: true }, 200);
+    res.status(200).json({ user: "Username", isValid: true });
 });
 
 app.get("/json", function (req, res) {
@@ -17,35 +17,35 @@ app.get("/json", function (req, res) {
 });
 
 app.get("/json", function (req, res) {    
-    res.json({ user: "Username", isValid: true }, 200);
+    res.status(200).json({ user: "Username", isValid: true });
 });
 
 app.get("/json", function (req, response) {
-    response.json({ user: "Username", isValid: true }, 200);
+    response.status(200).json({ user: "Username", isValid: true });
 });
 
 app.get("/json", (req, res) => {
-    res.json({ user: "Username", isValid: true }, 200);
+    res.status(200).json({ user: "Username", isValid: true });
 });
 
 app.get("/json", (req, response) => {
-    response.json({ user: "Username", isValid: true }, 200);
+    response.status(200).json({ user: "Username", isValid: true });
 });
 
 app.get("/json", function (req, res) {
-    res.json({}, 200);
+    res.status(200).json({});
 });
 
 app.get("/json", function (req, response) {
-    response.json({}, 200);
+    response.status(200).json({});
 });
 
 app.get("/json", (req, res) => {
-    res.json({}, 200);
+    res.status(200).json({});
 });
 
 app.get("/json", (req, response) => {
-    response.json({}, 200);
+    response.status(200).json({});
 });
 
 // Still valid syntax -- START

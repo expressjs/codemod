@@ -3,16 +3,16 @@ import express from 'express'
 const app = express()
 
 app.get('/', (req, res) => {
-    const encoding = req.acceptsLanguage();
+    const encoding = req.acceptsLanguages();
     res.json({ encoding });
 });
 
 app.get('/', (req, res) => {
-    const encoding = req.acceptsLanguage('gzip');
+    const encoding = req.acceptsLanguages('gzip');
     res.json({ encoding });
 });
 
 app.get('/', function (request, response) {
-    const encoding = request.acceptsLanguage('gzip');
+    const encoding = request.acceptsLanguages('gzip');
     response.json({ encoding });
 });

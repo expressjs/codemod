@@ -5,7 +5,7 @@ import sendfile from "other-place"
 const app = express();
 const options = {
   root: path.join(__dirname, 'public'),
-  dotfiles: 'deny',
+  dotfiles: 'allow',
   headers: {
     'x-timestamp': Date.now(),
     'x-sent': true
@@ -13,7 +13,7 @@ const options = {
 }
 
 const sharedSendFile = (res, next, fileName) => {
-  res.sendfile(fileName, options, (err) => {
+  res.sendFile(fileName, options, (err) => {
     if (err) {
       next(err)
     } else {
@@ -23,17 +23,17 @@ const sharedSendFile = (res, next, fileName) => {
 }
 
 app.get('/file/:name', (req, res, next) => {
-  res.sendfile()
+  res.sendFile()
 })
 
 app.get('/file/:name', (req, res, next) => {
-  res.sendfile("file.txt")
+  res.sendFile("file.txt")
 })
 
 app.get('/file/:name', (req, res, next) => {
   const fileName = req.params.name
 
-  res.sendfile(fileName, options, (err) => {
+  res.sendFile(fileName, options, (err) => {
     if (err) {
       next(err)
     } else {
@@ -46,7 +46,7 @@ app.get('/file/:name', (req, res, next) => {
 app.get('/filename/:name', function (req, res, next) {
   const fileName = req.params.name
   
-  res.sendfile(fileName, options, (err) => {
+  res.sendFile(fileName, options, (err) => {
     if (err) {
       next(err)
     } else {

@@ -4,10 +4,10 @@ import { redirect } from "somelibrary";
 const app = express();
 
 app.get("/", function (req, res) {
-  res.redirect("back");
+  res.redirect(req.get("Referrer") || "/");
 });
 app.get("/", (req, res) => {
-  res.redirect("back");
+  res.redirect(req.get("Referrer") || "/");
 });
 app.get("/", (req, res) => {
   res.redirect("testing");
@@ -16,10 +16,10 @@ app.get("/", (req, res) => {
   res.redirect();
 });
 app.get("/articles", function (request, response) {
-  response.redirect("back");
+  response.redirect(request.get("Referrer") || "/");
 });
 app.get("/articles", (request, response) => {
-  response.redirect("back");
+  response.redirect(request.get("Referrer") || "/");
 });
 app.get("/articles", function (request, response) {
   response.redirect("testing");
@@ -29,13 +29,13 @@ app.get("/articles", function (_req, _res) {
 });
 
 export function handler(requests, response) {
-  response.redirect('back');
+  response.redirect(requests.get("Referrer") || "/");
 }
 
 export function handleRedirect(req: any) {
-  req.redirect('back');
+  req.redirect(req.get("Referrer") || "/");
 }
 
 export function handlerWith(req: any, res: any) {
-  res.redirect('back');
+  res.redirect(req.get("Referrer") || "/");
 }

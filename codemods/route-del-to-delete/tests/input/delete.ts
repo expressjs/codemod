@@ -4,15 +4,15 @@ const app = express();
 
 app.get("/", (req, res) => {});
 
-app.del([""],() => {
+app.delete([""],() => {
   myImportantLogic();
 });
 
-app.del([],() => {
+app.delete([],() => {
   myImportantLogic();
 });
 
-app.del(/d/,() => {
+app.delete(/d/,() => {
   myImportantLogic();
 });
 
@@ -24,7 +24,7 @@ app.del(function () {
   myImportantLogic();
 });
 
-app.del("/old", () => {
+app.delete("/old", () => {
   myImportantLogic();
 });
 

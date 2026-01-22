@@ -9,7 +9,7 @@ app.get("/send", function (...arg) {
 
 app.get("/send", function (...arg) {
     const [, res] = arg
-    res.send(200, true);
+    res.status(200).send(true);
 });
 
 app.get("/send", function (req, res) {
@@ -17,35 +17,35 @@ app.get("/send", function (req, res) {
 });
 
 app.get("/send", function (req, res) {
-    res.send(200, { hello: "world" });
+    res.status(200).send({ hello: "world" });
 });
 
 app.get("/send", function (req, response) {
-    response.send(200, "Hello World");
+    response.status(200).send("Hello World");
 });
 
 app.get("/send", function (req, res) {
-    res.send(200);
+    res.sendStatus(200);
 });
 
 app.get("/send", function (req, res) {
-    res.send(200, true);
+    res.status(200).send(true);
 });
 
 app.get("/send", (req, res) => {
-    res.send(200, { hello: "world" });
+    res.status(200).send({ hello: "world" });
 });
 
 app.get("/send", (req, res) => {
-    res.send(200);
+    res.sendStatus(200);
 });
 
 app.get("/send", (req, response) => {
-    response.send(200);
+    response.sendStatus(200);
 });
 
 app.get("/send", (req, response) => {
-    response.send(200, true);
+    response.status(200).send(true);
 });
 
 // Still valid syntax -- START
