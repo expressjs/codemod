@@ -10,7 +10,7 @@ app.get("/", function (...arg) {
 
 app.get("/", function (...arg) {
   const [, res] = arg
-  res.redirect(301, "/other-page");
+  res.redirect("/other-page", 301);
 });
 
 app.get("/", function (req, res) {
@@ -18,11 +18,11 @@ app.get("/", function (req, res) {
 });
 
 app.get("/", function (req, res) {
-  res.redirect(301, "/other-page");
+  res.redirect("/other-page", 301);
 });
 
 app.get("/", function (req, response) {
-  response.redirect(301, "/other-page");
+  response.redirect("/other-page", 301);
 });
 
 app.get("/", function (req, res) {

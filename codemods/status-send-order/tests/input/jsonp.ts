@@ -7,35 +7,35 @@ app.get("/json", function (req, res) {
 });
 
 app.get("/jsonp", function (req, res) {
-    res.status(200).jsonp({ user: "Username", isValid: true });
+    res.jsonp({ user: "Username", isValid: true }, 200);
 });
 
 app.get("/jsonp", function (req, response) {
-    response.status(200).jsonp({ user: "Username", isValid: true });
+    response.jsonp({ user: "Username", isValid: true }, 200);
 });
 
 app.get("/jsonp", (req, res) => {
-    res.status(200).jsonp({ user: "Username", isValid: true });
+    res.jsonp({ user: "Username", isValid: true }, 200);
 });
 
 app.get("/jsonp", (req, response) => {
-    response.status(200).jsonp({ user: "Username", isValid: true });
+    response.jsonp({ user: "Username", isValid: true }, 200);
 });
 
 app.get("/jsonp", function (req, res) {
-    res.status(200).jsonp({});
+    res.jsonp({}, 200);
 });
 
 app.get("/jsonp", function (req, response) {
-    response.status(200).jsonp({});
+    response.jsonp({}, 200);
 });
 
 app.get("/jsonp", (req, res) => {
-    res.status(200).jsonp({})
+    res.jsonp({}, 200)
 });
 
 app.get("/jsonp", (req, response) => {
-    response.status(200).jsonp({})
+    response.jsonp({}, 200)
 });
 
 // Still valid syntax -- START
