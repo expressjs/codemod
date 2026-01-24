@@ -6,7 +6,7 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignore": ["__testfixtures__", "tests"]
+    "includes": ["**", "!**/__testfixtures__", "!**/tests"]
   },
   "linter": {
     "enabled": true,
@@ -18,12 +18,22 @@
       },
       "suspicious": {
         "noExplicitAny": "off"
+      },
+      "style": {
+        "noParameterAssign": "error",
+        "useAsConstAssertion": "error",
+        "useDefaultParameterLast": "error",
+        "useEnumInitializers": "error",
+        "useSelfClosingElements": "error",
+        "useSingleVarDeclarator": "error",
+        "noUnusedTemplateLiteral": "error",
+        "useNumberNamespace": "error",
+        "noInferrableTypes": "error",
+        "noUselessElse": "error"
       }
     }
   },
-  "organizeImports": {
-    "enabled": true
-  },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "json": {
     "parser": {
       "allowComments": true
