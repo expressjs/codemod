@@ -10,6 +10,11 @@
     "directory": "codemods/v5-migration-recipe",
     "bugs": "https://github.com/expressjs/codemod/issues"
   },
+  {
+  "scripts": {
+    "test": "echo \"No tests for this codemod\""
+  }
+}
   "author": "bjohansebas (Sebastian Beltran)",
   "license": "MIT",
   "homepage": "https://github.com/expressjs/codemod/blob/main/codemods/v5-migration-recipe/README.md",
