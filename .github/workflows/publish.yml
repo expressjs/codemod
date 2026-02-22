@@ -14,22 +14,29 @@ on:
         description: "Tag to publish (format: v1.0.0@codemod-name)"
         required: true
         type: string
-permissions:
-  id-token: write
-  contents: read
+        
+permissions: read-all
+ 
 
 jobs:
   validate-and-publish:
     name: Validate and Publish Codemod
     environment: publish
     runs-on: ubuntu-latest
-
+    
+    permissions:
+      id-token: write
+      contents: read
     outputs:
       version: ${{ steps.parse-tag.outputs.version }}
       codemod-name: ${{ steps.parse-tag.outputs.codemod-name }}
       codemod-path: ${{ steps.parse-tag.outputs.codemod-path }}
-
     steps:
+      - name: Harden Runner
+        uses: step-security/harden-runner@20cf305ff2072d973412fa9b1e3a4f227bda3c76 # v2.14.0
+        with:
+          egress-policy: audit
+          
       - name: Checkout repository
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
@@ -87,6 +94,7 @@ jobs:
       - name: Setup Node.js environment
         uses: actions/setup-node@395ad3262231945c25e8478fd5baf05154b1d79f # v6.1.0
         with:
+          node-version-file: ".nvmrc"
           cache: npm
           cache-dependency-path: package-lock.json
 
@@ -104,9 +112,10 @@ jobs:
      
 
       - name: Publish codemod
-        working-directory: ${{ steps.parse-tag.outputs.codemod-path }}
-        run: npx codemod publish
-
+        uses: codemod/publish-action@dd6c8dbc5ceb1a6146feba41481d88b43da50024 # v1
+        with:
+          path: ${{ steps.parse-tag.outputs.codemod-path }}
+       
       - name: Create release summary
         env:
           CODEMOD_NAME: ${{ steps.parse-tag.outputs.codemod-name }}
