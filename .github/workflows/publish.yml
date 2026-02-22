@@ -14,19 +14,25 @@ on:
         description: "Tag to publish (format: v1.0.0@codemod-name)"
         required: true
         type: string
+        
+permissions: read-all
+ 
 
 jobs:
   validate-and-publish:
     name: Validate and Publish Codemod
     environment: publish
     runs-on: ubuntu-latest
-
+    
+    permissions:
+      id-token: write
+      contents: read
     outputs:
       version: ${{ steps.parse-tag.outputs.version }}
       codemod-name: ${{ steps.parse-tag.outputs.codemod-name }}
       codemod-path: ${{ steps.parse-tag.outputs.codemod-path }}
-
     steps:
+          
       - name: Checkout repository
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
@@ -98,15 +104,13 @@ jobs:
         working-directory: ${{ steps.parse-tag.outputs.codemod-path }}
         run: npm run --if-present test
 
-      - name: Authenticate with Codemod registry
-        env:
-          CODEMOD_TOKEN: ${{ secrets.CODEMOD_TOKEN }}
-        run: npx codemod login --api-key "$CODEMOD_TOKEN"
+     
 
       - name: Publish codemod
-        working-directory: ${{ steps.parse-tag.outputs.codemod-path }}
-        run: npx codemod publish
-
+        uses: codemod/publish-action@dd6c8dbc5ceb1a6146feba41481d88b43da50024 # v1
+        with:
+          path: ${{ steps.parse-tag.outputs.codemod-path }}
+       
       - name: Create release summary
         env:
           CODEMOD_NAME: ${{ steps.parse-tag.outputs.codemod-name }}
