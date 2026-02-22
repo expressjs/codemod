@@ -6,24 +6,18 @@
     "useIgnoreFile": true
   },
   "files": {
-    "ignore": ["__testfixtures__", "tests"]
+    "includes": ["**", "!**/__testfixtures__", "!**/tests"]
   },
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
       "correctness": {
-        "noUnusedImports": "error",
-        "useExhaustiveDependencies": "off"
-      },
-      "suspicious": {
-        "noExplicitAny": "off"
+        "noUnusedImports": "error"
       }
     }
   },
-  "organizeImports": {
-    "enabled": true
-  },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "json": {
     "parser": {
       "allowComments": true
