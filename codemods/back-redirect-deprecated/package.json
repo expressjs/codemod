@@ -17,6 +17,6 @@
   "license": "MIT",
   "homepage": "https://github.com/expressjs/codemod/blob/main/codemods/back-redirect-deprecated/README.md",
   "devDependencies": {
-    "@codemod.com/jssg-types": "^1.5.0"
+    "@codemod.com/jssg-types": "^1.5.1"
   }
 }
