@@ -1,0 +1,26 @@
+schema_version: "1.0"
+name: "@expressjs/static-dotfiles"
+version: "1.0.0"
+description: Adds explicit dotfiles option to express.static() calls to preserve Express 4 behavior where dotfiles were served by default
+author: Vishal Kumar Singh
+license: MIT
+workflow: workflow.yaml
+repository: "https://github.com/expressjs/codemod/tree/HEAD/codemods/static-dotfiles"
+category: migration
+
+targets:
+  languages:
+    - javascript
+    - typescript
+
+keywords:
+  - transformation
+  - migration
+  - express
+  - static
+  - dotfiles
+  - express.static
+
+registry:
+  access: public
+  visibility: public
