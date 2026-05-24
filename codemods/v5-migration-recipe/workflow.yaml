@@ -9,6 +9,16 @@ nodes:
     runtime:
       type: direct
     steps:
+      - name: Updates package.json Express dependencies for Express.js v5 migrations
+        js-ast-grep:
+          js_file: src/package-json.ts
+          base_path: .
+          semantic_analysis: file
+          include:
+            - "**/package.json"
+          exclude:
+            - "**/node_modules/**"
+          language: json
       - name: Migrates usage of the legacy APIs `res.redirect('back')` and `res.location('back')` to the current recommended approaches
         codemod:
           source: "@expressjs/back-redirect-deprecated"

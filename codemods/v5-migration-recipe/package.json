@@ -4,6 +4,9 @@
   "version": "1.0.0",
   "description": "This codemod migration recipe helps you update your Express.js v4 applications to be compatible with Express.js v5 by addressing deprecated APIs.",
   "type": "module",
+  "scripts": {
+    "test": "npx codemod jssg test -l json ./src/package-json.ts ./"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/expressjs/codemod.git",

@@ -4,6 +4,7 @@ This codemod migration recipe helps you update your Express.js v4 applications t
 
 Included transformations:
 
+- **Package JSON Dependencies**: Updates existing package entries in `package.json` that match Express.js v5 direct dependencies and related Express type packages.
 - **Back Redirect Deprecated**: This transformation updates instances of `res.redirect('back')` and `res.location('back')` to use the recommended alternatives. Registry entry: [https://app.codemod.com/registry/@expressjs/back-redirect-deprecated](https://app.codemod.com/registry/@expressjs/back-redirect-deprecated).
 - **Explicit Request Params**: Migrates usage of the legacy API `req.param(name)` to the current recommended alternatives. Registry entry: [https://app.codemod.com/registry/@expressjs/explicit-request-params](https://app.codemod.com/registry/@expressjs/explicit-request-params).
 - **Pluralize Method Names**: Migrates deprecated singular request methods to their pluralized counterparts where applicable. Registry entry: [https://app.codemod.com/registry/@expressjs/pluralize-method-names](https://app.codemod.com/registry/@expressjs/pluralize-method-names).
