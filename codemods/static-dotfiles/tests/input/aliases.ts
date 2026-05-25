@@ -21,3 +21,5 @@ app.use(
 app.use(expressNS.static('namespace'));
 
 app.use(expressRequire.static('commonjs'));
+
+app.use(require("express").static('direct-require'));

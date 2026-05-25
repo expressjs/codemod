@@ -22,3 +22,5 @@ app.use(
 app.use(expressNS.static('namespace', { dotfiles: 'allow' /* Express 5: preserve v4 behavior */ }));
 
 app.use(expressRequire.static('commonjs', { dotfiles: 'allow' /* Express 5: preserve v4 behavior */ }));
+
+app.use(require("express").static('direct-require', { dotfiles: 'allow' /* Express 5: preserve v4 behavior */ }));

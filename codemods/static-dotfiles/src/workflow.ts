@@ -1,11 +1,10 @@
 import type Js from '@codemod.com/jssg-types/src/langs/javascript'
-import type { Edit, SgRoot } from '@codemod.com/jssg-types/src/main'
+import type { Edit, SgNode, SgRoot } from '@codemod.com/jssg-types/src/main'
 
 const DOTFILES_OPTION = "dotfiles: 'allow' /* Express 5: preserve v4 behavior */"
 
 async function transform(root: SgRoot<Js>): Promise<string | null> {
   const rootNode = root.root()
-  const expressBindings = collectExpressBindings(rootNode.text())
 
   const nodes = rootNode.findAll({
     rule: {
@@ -24,8 +23,7 @@ async function transform(root: SgRoot<Js>): Promise<string | null> {
 
     if (!target || !pathArg) continue
 
-    const targetText = target.text()
-    if (!isExpressBinding(targetText, expressBindings)) continue
+    if (!isExpressBinding(target)) continue
 
     if (optsArg) {
       const optsText = optsArg.text()
@@ -36,7 +34,7 @@ async function transform(root: SgRoot<Js>): Promise<string | null> {
       const newOpts = addDotfilesOption(optsText)
       edits.push(call.replace(call.text().replace(optsText, newOpts)))
     } else {
-      edits.push(call.replace(`${targetText}.static(${pathArg.text()}, { ${DOTFILES_OPTION} })`))
+      edits.push(call.replace(`${target.text()}.static(${pathArg.text()}, { ${DOTFILES_OPTION} })`))
     }
   }
 
@@ -45,25 +43,13 @@ async function transform(root: SgRoot<Js>): Promise<string | null> {
   return rootNode.commitEdits(edits)
 }
 
-function collectExpressBindings(source: string): Set<string> {
-  const bindings = new Set<string>(['express'])
+function getStringLiteralValue(node: SgNode<Js> | null | undefined): string | null {
+  if (!node || !node.is('string')) return null
 
-  const defaultImportPattern = /import\s+([A-Za-z_$][\w$]*)(?:\s*,[\s\S]*?)?\s+from\s+['"]express['"]/g
-  const namespaceImportPattern = /import\s+\*\s+as\s+([A-Za-z_$][\w$]*)\s+from\s+['"]express['"]/g
-  const defaultAsImportPattern = /import\s+\{\s*default\s+as\s+([A-Za-z_$][\w$]*)[\s\S]*?\}\s+from\s+['"]express['"]/g
-  const requirePattern = /\b(?:const|let|var)\s+([A-Za-z_$][\w$]*)\s*=\s*require\s*\(\s*['"]express['"]\s*\)/g
+  const text = node.text()
+  if (text.length < 2) return null
 
-  const patterns = [defaultImportPattern, namespaceImportPattern, defaultAsImportPattern, requirePattern]
-
-  for (const pattern of patterns) {
-    let match = pattern.exec(source)
-    while (match !== null) {
-      bindings.add(match[1])
-      match = pattern.exec(source)
-    }
-  }
-
-  return bindings
+  return text.slice(1, -1)
 }
 
 function addDotfilesOption(optsText: string): string {
@@ -76,17 +62,86 @@ function addDotfilesOption(optsText: string): string {
   }
 
   const closingBraceIndex = trimmed.lastIndexOf('}')
-  const body = trimmed.slice(0, closingBraceIndex).replace(/\s*$/, '')
-  const closingIndentMatch = trimmed.match(/\n([ \t]*)\}$/)
-  const closingIndent = closingIndentMatch?.[1] ?? ''
-  const propertyIndentMatch = body.match(/\n([ \t]*)[^\n]*$/)
-  const propertyIndent = propertyIndentMatch?.[1] ?? '  '
+  const body = trimmed.slice(0, closingBraceIndex).trimEnd()
+  const closingIndent = getIndentAfterLastNewline(trimmed)
+  const propertyIndent = getIndentAfterLastNewline(body) || '  '
 
   return `${body}\n${propertyIndent}${DOTFILES_OPTION}\n${closingIndent}}`
 }
 
-function isExpressBinding(binding: string, expressBindings: Set<string>): boolean {
-  return expressBindings.has(binding) || /^require\(\s*['"]express['"]\s*\)$/.test(binding)
+function isExpressBinding(binding: SgNode<Js>): boolean {
+  if (binding.is('call_expression')) {
+    return isExpressRequireCall(binding)
+  }
+
+  const definition = binding.definition({ resolveExternal: false })
+  if (!definition) return false
+
+  return isExpressDefinition(definition.node)
+}
+
+function isExpressDefinition(node: SgNode<Js>): boolean {
+  const importStatement = findAncestorOrSelf(node, 'import_statement')
+  if (importStatement) {
+    return isExpressImport(importStatement)
+  }
+
+  const declarator = findAncestorOrSelf(node, 'variable_declarator')
+  if (declarator) {
+    return isExpressRequireDeclarator(declarator)
+  }
+
+  return false
+}
+
+function isExpressImport(importStatement: SgNode<Js>): boolean {
+  const source = importStatement.field('source')
+  return getStringLiteralValue(source) === 'express'
+}
+
+function isExpressRequireDeclarator(declarator: SgNode<Js>): boolean {
+  if (!declarator.is('variable_declarator')) return false
+
+  const value = declarator.field('value')
+  if (!value?.is('call_expression')) return false
+
+  return isExpressRequireCall(value)
+}
+
+function isExpressRequireCall(node: SgNode<Js>): boolean {
+  const callFunction = node.field('function')
+  if (!callFunction?.is('identifier') || callFunction.text() !== 'require') return false
+
+  const args = node.field('arguments')
+  if (!args) return false
+
+  const expressSource = args.children().find((child) => child.is('string'))
+  return getStringLiteralValue(expressSource) === 'express'
+}
+
+function findAncestorOrSelf(node: SgNode<Js>, kind: string): SgNode<Js> | null {
+  let current: SgNode<Js> | null = node
+
+  while (current) {
+    if (current.is(kind)) return current
+    current = current.parent()
+  }
+
+  return null
+}
+
+function getIndentAfterLastNewline(text: string): string {
+  const newlineIndex = text.lastIndexOf('\n')
+  if (newlineIndex === -1) return ''
+
+  let indent = ''
+  for (let index = newlineIndex + 1; index < text.length; index++) {
+    const char = text[index]
+    if (char !== ' ' && char !== '\t') break
+    indent += char
+  }
+
+  return indent
 }
 
 export default transform
