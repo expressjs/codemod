@@ -1,7 +1,7 @@
 {
   "name": "@expressjs/static-dotfiles",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Adds explicit dotfiles option to express.static() calls to preserve Express 4 behavior where dotfiles were served by default",
   "type": "module",
   "scripts": {
