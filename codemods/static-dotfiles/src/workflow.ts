@@ -5,6 +5,7 @@ const DOTFILES_OPTION = "dotfiles: 'allow' /* Express 5: preserve v4 behavior */
 
 async function transform(root: SgRoot<Js>): Promise<string | null> {
   const rootNode = root.root()
+  const edits: Edit[] = []
 
   const nodes = rootNode.findAll({
     rule: {
@@ -13,8 +14,6 @@ async function transform(root: SgRoot<Js>): Promise<string | null> {
   })
 
   if (!nodes.length) return null
-
-  const edits: Edit[] = []
 
   for (const call of nodes) {
     const target = call.getMatch('CALL')

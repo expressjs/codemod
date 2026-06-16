@@ -6,30 +6,16 @@ This codemod adds an explicit `dotfiles: 'allow'` option to `express.static()` c
 
 ## Example
 
-### Before
-
-```javascript
-app.use(express.static('public'))
-```
-
-### After
-
-```javascript
-app.use(express.static('public', { dotfiles: 'allow' /* Express 5: preserve v4 behavior */ }))
+```diff
+- app.use(express.static('public'))
++ app.use(express.static('public', { dotfiles: 'allow' /* Express 5: preserve v4 behavior */ }))
 ```
 
 ### With existing options
 
-#### Before
-
-```javascript
-app.use(express.static('public', { maxAge: '1d' }))
-```
-
-#### After
-
-```javascript
-app.use(express.static('public', { maxAge: '1d', dotfiles: 'allow' /* Express 5: preserve v4 behavior */ }))
+```diff
+- app.use(express.static('public', { maxAge: '1d' }))
++ app.use(express.static('public', { maxAge: '1d', dotfiles: 'allow' /* Express 5: preserve v4 behavior */ }))
 ```
 
 ## Security Consideration
