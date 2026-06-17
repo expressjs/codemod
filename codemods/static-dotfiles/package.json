@@ -1,8 +1,8 @@
 {
   "name": "@expressjs/static-dotfiles",
   "private": true,
-  "version": "1.1.0",
-  "description": "Adds explicit dotfiles option to express.static() calls to preserve Express 4 behavior where dotfiles were served by default",
+  "version": "1.0.0",
+  "description": "Migrates express.static() options to Express 5: adds an explicit dotfiles option and renames the removed hidden and from options",
   "type": "module",
   "scripts": {
     "test": "npx codemod jssg test -l typescript ./src/workflow.ts ./"

@@ -1,8 +1,16 @@
-# Migrate `express.static` dotfiles behavior
+# Migrate `express.static` options
 
-In Express 5, the `express.static` middleware's `dotfiles` option now defaults to `"ignore"`. This is a change from Express 4, where dotfiles were served by default. As a result, files inside a directory that starts with a dot (`.`), such as `.well-known`, will no longer be accessible and will return a 404 Not Found error.
+Express 5 changes several `express.static` options:
 
-This codemod adds an explicit `dotfiles: 'allow'` option to `express.static()` calls that don't already specify a `dotfiles` option, preserving the Express 4 behavior.
+- The `dotfiles` option now defaults to `"ignore"` (Express 4 served dotfiles by default). Files inside a directory that starts with a dot (`.`), such as `.well-known`, will no longer be accessible and will return a 404 Not Found error.
+- The `hidden` option is removed and replaced by `dotfiles`.
+- The `from` option (an undocumented alias for `root`) is removed and replaced by `root`.
+
+This codemod updates `express.static()` calls to preserve the Express 4 behavior:
+
+1. Adds an explicit `dotfiles: 'allow'` option to calls that don't already specify a `dotfiles` (or `hidden`) option.
+2. Renames `hidden` to `dotfiles` (`hidden: true` → `dotfiles: 'allow'`, `hidden: false` → `dotfiles: 'ignore'`).
+3. Renames `from` to `root`.
 
 ## Example
 
@@ -16,6 +24,20 @@ This codemod adds an explicit `dotfiles: 'allow'` option to `express.static()` c
 ```diff
 - app.use(express.static('public', { maxAge: '1d' }))
 + app.use(express.static('public', { maxAge: '1d', dotfiles: 'allow' /* Express 5: preserve v4 behavior */ }))
+```
+
+### Removed `hidden` option
+
+```diff
+- app.use(express.static('public', { hidden: true }))
++ app.use(express.static('public', { dotfiles: 'allow' }))
+```
+
+### Removed `from` option
+
+```diff
+- app.use(express.static('uploads', { from: '/uploads' }))
++ app.use(express.static('uploads', { root: '/uploads', dotfiles: 'allow' /* Express 5: preserve v4 behavior */ }))
 ```
 
 ## Security Consideration

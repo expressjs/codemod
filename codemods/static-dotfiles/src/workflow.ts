@@ -24,22 +24,95 @@ async function transform(root: SgRoot<Js>): Promise<string | null> {
 
     if (!isExpressBinding(target)) continue
 
-    if (optsArg) {
-      const optsText = optsArg.text()
-      if (optsText.includes('dotfiles')) {
-        continue
-      }
-
-      const newOpts = addDotfilesOption(optsText)
-      edits.push(call.replace(call.text().replace(optsText, newOpts)))
-    } else {
+    if (!optsArg) {
       edits.push(call.replace(`${target.text()}.static(${pathArg.text()}, { ${DOTFILES_OPTION} })`))
+      continue
     }
+
+    const result = transformOptions(optsArg)
+    // Skip anything that isn't an object literal (e.g. a variable reference);
+    // we can't safely rewrite options we can't see.
+    if (!result) continue
+
+    let newOpts = result.text
+    if (!result.hasDotfiles) {
+      newOpts = addDotfilesOption(newOpts)
+    }
+
+    const originalOpts = optsArg.text()
+    if (newOpts === originalOpts) continue
+
+    edits.push(call.replace(call.text().replace(originalOpts, newOpts)))
   }
 
   if (!edits.length) return null
 
   return rootNode.commitEdits(edits)
+}
+
+interface TransformedOptions {
+  text: string
+  // True when the resulting object already carries a `dotfiles` key (either
+  // present originally or produced by renaming a removed `hidden` option), so
+  // the default `dotfiles: 'allow'` should NOT be appended.
+  hasDotfiles: boolean
+}
+
+// Rewrites the options object for Express 5:
+// - renames the removed `hidden` option to `dotfiles` (true -> 'allow', false -> 'ignore')
+// - renames the removed `from` option to `root`
+// Returns null when the argument isn't an object literal.
+function transformOptions(optsArg: SgNode<Js>): TransformedOptions | null {
+  if (!optsArg.is('object')) return null
+
+  const edits: Edit[] = []
+  const pairs = optsArg.children().filter((pair: SgNode<Js>) => pair.is('pair'))
+
+  // An explicit `dotfiles` key always wins: we never append a default and never
+  // rename a `hidden` onto it (which would produce a duplicate `dotfiles` key).
+  const hasExplicitDotfiles = pairs.some((pair) => getOptionKeyName(pair) === 'dotfiles')
+
+  // A present `hidden` (even non-literal) maps onto `dotfiles`, so a default
+  // must not be appended even when we can't rewrite its value.
+  let hasDotfiles = hasExplicitDotfiles
+
+  for (const pair of pairs) {
+    const keyName = getOptionKeyName(pair)
+
+    if (keyName === 'hidden') {
+      hasDotfiles = true
+
+      if (hasExplicitDotfiles) continue
+
+      const valueNode = pair.field('value')
+      const mapped = valueNode ? mapHiddenValue(valueNode.text()) : null
+      if (mapped) edits.push(pair.replace(`dotfiles: ${mapped}`))
+      continue
+    }
+
+    if (keyName === 'from') {
+      const keyNode = pair.field('key')
+      if (keyNode) edits.push(keyNode.replace('root'))
+    }
+  }
+
+  const text = edits.length ? optsArg.commitEdits(edits) : optsArg.text()
+  return { text, hasDotfiles }
+}
+
+function getOptionKeyName(pair: SgNode<Js>): string | null {
+  const keyNode = pair.field('key')
+  if (!keyNode) return null
+
+  return keyNode.is('string') ? getStringLiteralValue(keyNode) : keyNode.text()
+}
+
+function mapHiddenValue(valueText: string): string | null {
+  const trimmed = valueText.trim()
+  if (trimmed === 'true') return "'allow'"
+  if (trimmed === 'false') return "'ignore'"
+
+  return null
 }
 
 function getStringLiteralValue(node: SgNode<Js> | null | undefined): string | null {
@@ -122,7 +195,11 @@ function findAncestorOrSelf(node: SgNode<Js>, kind: string): SgNode<Js> | null {
   let current: SgNode<Js> | null = node
 
   while (current) {
-    if (current.is(kind)) return current
+    // Assign to a typed boolean so `is()`'s type predicate doesn't narrow
+    // `current` to `never` on the following line.
+    const matches: boolean = current.is(kind)
+    if (matches) return current
+
     current = current.parent()
   }
 

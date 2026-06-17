@@ -1,6 +1,7 @@
 import express from "express";
 
 const app = express();
+const serveHidden = true;
 
 app.use(express.static('public', { dotfiles: 'allow' /* Express 5: preserve v4 behavior */ }));
 
@@ -15,6 +16,24 @@ app.use(express.static('public', { index: false, maxAge: 86400000, dotfiles: 'al
 app.use(express.static('public', { dotfiles: 'deny' }));
 
 app.use(express.static('public', { dotfiles: 'allow', maxAge: '1d' }));
+
+app.use(express.static('public', { dotfiles: 'allow' }));
+
+app.use(express.static('public', { dotfiles: 'ignore' }));
+
+app.use(express.static('public', { dotfiles: 'allow', maxAge: '1d' }));
+
+app.use(express.static('uploads', { root: '/uploads', dotfiles: 'allow' /* Express 5: preserve v4 behavior */ }));
+
+app.use(express.static('uploads', { root: '/uploads', maxAge: '1d', dotfiles: 'allow' /* Express 5: preserve v4 behavior */ }));
+
+app.use(express.static('public', { dotfiles: 'allow' }));
+
+app.use(express.static('uploads', { root: '/uploads', dotfiles: 'allow' /* Express 5: preserve v4 behavior */ }));
+
+app.use(express.static('public', { hidden: true, dotfiles: 'deny' }));
+
+app.use(express.static('public', { hidden: serveHidden }));
 
 const staticPath = './static';
 app.use(express.static(staticPath, { dotfiles: 'allow' /* Express 5: preserve v4 behavior */ }));

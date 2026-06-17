@@ -1,7 +1,7 @@
 schema_version: "1.0"
 name: "@expressjs/static-dotfiles"
 version: "1.0.0"
-description: Adds explicit dotfiles option to express.static() calls to preserve Express 4 behavior where dotfiles were served by default
+description: Migrates express.static() options to Express 5 - adds an explicit dotfiles option and renames the removed hidden and from options
 author: Vishal Kumar Singh
 license: MIT
 workflow: workflow.yaml
