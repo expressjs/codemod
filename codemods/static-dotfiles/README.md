@@ -56,4 +56,4 @@ app.use(express.static('public'))
 
 ## References
 
-- [Express 5 Migration Guide - express.static dotfiles](https://expressjs.com/en/guide/migrating-5.html#express.static.dotfiles)
+- [Express 5 Migration Guide - express.static dotfiles](https://expressjs.com/en/guide/migrating-5#expressstatic-options)
