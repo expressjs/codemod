@@ -1,0 +1,28 @@
+schema_version: "1.0"
+name: "@expressjs/static-mime"
+version: "1.0.0"
+description: Migrates express.static.mime (removed in Express 5) to the mime-types package
+author: Sebastian Beltran
+license: MIT
+workflow: workflow.yaml
+repository: "https://github.com/expressjs/codemod/tree/HEAD/codemods/static-mime"
+category: migration
+
+targets:
+  languages:
+    - json
+    - javascript
+    - typescript
+
+keywords:
+  - transformation
+  - migration
+  - express
+  - static
+  - mime
+  - mime-types
+  - express.static.mime
+
+registry:
+  access: public
+  visibility: public

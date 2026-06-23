@@ -1,0 +1,22 @@
+{
+  "name": "@expressjs/static-mime",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Migrates express.static.mime (removed in Express 5) to the mime-types package",
+  "type": "module",
+  "scripts": {
+    "test": "npx codemod jssg test -l typescript ./src/workflow.ts ./ && npx codemod jssg test -l json ./src/package-json.ts ./package-json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/expressjs/codemod.git",
+    "directory": "codemods/static-mime",
+    "bugs": "https://github.com/expressjs/codemod/issues"
+  },
+  "author": "Sebastian Beltran",
+  "license": "MIT",
+  "homepage": "https://github.com/expressjs/codemod/blob/main/codemods/static-mime/README.md",
+  "devDependencies": {
+    "@codemod.com/jssg-types": "^1.5.0"
+  }
+}
