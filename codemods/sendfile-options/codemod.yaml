@@ -2,7 +2,7 @@ schema_version: "1.0"
 name: "@expressjs/sendfile-options"
 version: "1.0.0"
 description: Migrates res.sendFile() options to Express 5 - adds an explicit dotfiles option and renames the removed hidden and from options
-author: Sebastian Beltran
+author: Sebastian Beltran <bjohansebas@gmail.com>
 license: MIT
 workflow: workflow.yaml
 repository: "https://github.com/expressjs/codemod/tree/HEAD/codemods/sendfile-options"

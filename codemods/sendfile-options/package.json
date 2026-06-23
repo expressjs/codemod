@@ -13,7 +13,7 @@
     "directory": "codemods/sendfile-options",
     "bugs": "https://github.com/expressjs/codemod/issues"
   },
-  "author": "Sebastian Beltran",
+  "author": "Sebastian Beltran <bjohansebas@gmail.com>",
   "license": "MIT",
   "homepage": "https://github.com/expressjs/codemod/blob/main/codemods/sendfile-options/README.md",
   "devDependencies": {
