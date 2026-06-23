@@ -1,0 +1,38 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/codemod-com/codemod/refs/heads/main/schemas/workflow.json
+
+version: "1"
+
+nodes:
+  - id: apply-transforms
+    name: Apply AST Transformations
+    type: automatic
+    runtime:
+      type: direct
+    steps:
+      - name: Migrates express.static.mime to the mime-types package
+        js-ast-grep:
+          js_file: src/workflow.ts
+          base_path: .
+          semantic_analysis: file
+          include:
+            - "**/*.cjs"
+            - "**/*.js"
+            - "**/*.jsx"
+            - "**/*.mjs"
+            - "**/*.cts"
+            - "**/*.mts"
+            - "**/*.ts"
+            - "**/*.tsx"
+          exclude:
+            - "**/node_modules/**"
+          language: typescript
+      - name: Adds the mime-types dependency to package.json for Express projects
+        js-ast-grep:
+          js_file: src/package-json.ts
+          base_path: .
+          semantic_analysis: file
+          include:
+            - "**/package.json"
+          exclude:
+            - "**/node_modules/**"
+          language: json

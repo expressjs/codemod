@@ -40,3 +40,12 @@ nodes:
       - name: Migrates usage of the legacy APIs `app.del()` to `app.delete()`
         codemod:
           source: "@expressjs/route-del-to-delete"
+      - name: Adds explicit dotfiles option to express.static() calls to preserve Express 4 behavior
+        codemod:
+          source: "@expressjs/static-dotfiles"
+      - name: Migrates express.static.mime to the mime-types package
+        codemod:
+          source: "@expressjs/static-mime"
+      - name: Adds explicit dotfiles option to res.sendFile() calls to preserve Express 4 behavior
+        codemod:
+          source: "@expressjs/sendfile-options"

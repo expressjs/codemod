@@ -1,0 +1,7 @@
+{
+  "name": "already-has-it",
+  "dependencies": {
+    "express": "^5.0.0",
+    "mime-types": "^2.1.35"
+  }
+}

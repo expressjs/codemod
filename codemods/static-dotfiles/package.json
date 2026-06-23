@@ -1,0 +1,22 @@
+{
+  "name": "@expressjs/static-dotfiles",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Migrates express.static() options to Express 5: adds an explicit dotfiles option and renames the removed hidden and from options",
+  "type": "module",
+  "scripts": {
+    "test": "npx codemod jssg test -l typescript ./src/workflow.ts ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/expressjs/codemod.git",
+    "directory": "codemods/static-dotfiles",
+    "bugs": "https://github.com/expressjs/codemod/issues"
+  },
+  "author": "Vishal Kumar Singh",
+  "license": "MIT",
+  "homepage": "https://github.com/expressjs/codemod/blob/main/codemods/static-dotfiles/README.md",
+  "devDependencies": {
+    "@codemod.com/jssg-types": "^1.5.0"
+  }
+}
