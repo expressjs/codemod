@@ -213,7 +213,8 @@ function collectDeclaredNames(rootNode: SgNode<Js>): Set<string> {
     if (name?.is('identifier')) names.add(name.text())
   }
 
-  for (const kind of ['function_declaration', 'generator_function_declaration', 'class_declaration']) {
+  const declarationKinds = ['function_declaration', 'generator_function_declaration', 'class_declaration'] as const
+  for (const kind of declarationKinds) {
     for (const decl of rootNode.findAll({ rule: { kind } })) {
       const name = decl.field('name')
       if (name?.is('identifier')) names.add(name.text())
