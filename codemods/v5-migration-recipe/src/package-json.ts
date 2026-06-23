@@ -45,17 +45,46 @@ function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value)
 }
 
+function parseVersion(range: string): [number, number, number] | null {
+  // Range operators (^, ~, >=, ...) are ignored and missing parts default to 0,
+  // so `>=4` parses as 4.0.0. Unparseable ranges such as `*`, `x`, `workspace:*`
+  // or `latest` yield null and are left untouched.
+  const match = range.match(/(\d+)(?:\.(\d+))?(?:\.(\d+))?/)
+  if (!match) return null
+
+  return [Number(match[1]), Number(match[2] ?? 0), Number(match[3] ?? 0)]
+}
+
+function isGreater(a: [number, number, number], b: [number, number, number]): boolean {
+  for (let index = 0; index < 3; index++) {
+    if (a[index] !== b[index]) return a[index] > b[index]
+  }
+
+  return false
+}
+
 function updateDependency(dependencies: unknown, packageName: string, version: string): boolean {
   if (!isRecord(dependencies)) {
     return false
   }
 
-  if (Object.hasOwn(dependencies, packageName) && dependencies[packageName] !== version) {
-    dependencies[packageName] = version
-    return true
+  const current = dependencies[packageName]
+  if (typeof current !== 'string' || current === version) {
+    return false
   }
 
-  return false
+  // Never downgrade: skip when the declared version is already newer than the
+  // Express 5 target, so re-running the recipe is idempotent and projects ahead
+  // of 5.2.1 keep their versions. Equal versions are still normalized to the
+  // target range (e.g. `~2.0.0` -> `^2.0.0`).
+  const existing = parseVersion(current)
+  const target = parseVersion(version)
+  if (!existing || !target || isGreater(existing, target)) {
+    return false
+  }
+
+  dependencies[packageName] = version
+  return true
 }
 
 function detectIndent(source: string): string | number {
