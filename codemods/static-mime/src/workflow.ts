@@ -36,7 +36,8 @@ async function transform(root: SgRoot<Js>): Promise<string | null> {
 
   const edits: Edit[] = []
   for (const { node } of matches) {
-    edits.push(node.replace(localName))
+    const { node: target, replacement } = classifyUsage(node, localName)
+    edits.push(target.replace(replacement))
   }
 
   if (!existingName) {
@@ -45,6 +46,69 @@ async function transform(root: SgRoot<Js>): Promise<string | null> {
   }
 
   return rootNode.commitEdits(edits)
+}
+
+interface Usage {
+  // The outermost node to rewrite for this `express.static.mime` occurrence.
+  node: SgNode<Js>
+  replacement: string
+}
+
+// The mime@1.x instance Express 4 exposed as `express.static.mime` is not
+// API-compatible with `mime-types`. Besides the shared methods (`lookup`,
+// `extension`, `types`, `extensions`) handled by the plain rename, two cases
+// need extra work:
+//   - `mime.charsets.lookup(type)` becomes `mime.charset(type)`.
+//   - `define`, `load`, and `default_type` have no `mime-types` equivalent, so
+//     they are flagged inline for manual migration instead of silently breaking.
+function classifyUsage(mimeNode: SgNode<Js>, localName: string): Usage {
+  const access = mimeNode.parent()
+  const property = getPropertyName(access)
+
+  if (property === 'charsets') {
+    // `express.static.mime.charsets.lookup(type)` -> `mime.charset(type)`
+    const lookupAccess = access?.parent()
+    if (getPropertyName(lookupAccess) === 'lookup') {
+      const call = lookupAccess?.parent()
+      const args = call?.is('call_expression') ? call.field('arguments') : null
+      if (call && args) {
+        return { node: call, replacement: `${localName}.charset${args.text()}` }
+      }
+    }
+
+    return flag(
+      access ?? mimeNode,
+      `${localName}.charset`,
+      "'mime-types' has no charsets.lookup(); use charset() and migrate manually",
+    )
+  }
+
+  if (property === 'define' || property === 'load') {
+    const call = access?.parent()
+    if (call?.is('call_expression')) {
+      const rewritten = call.text().replace(mimeNode.text(), localName)
+      return flag(call, rewritten, `'mime-types' has no ${property}(); migrate manually`)
+    }
+  }
+
+  if (property === 'default_type' && access) {
+    return flag(access, `${localName}.default_type`, "'mime-types' has no default_type; migrate manually")
+  }
+
+  return { node: mimeNode, replacement: localName }
+}
+
+function flag(node: SgNode<Js>, code: string, message: string): Usage {
+  return { node, replacement: `${code} /* TODO: ${message} */` }
+}
+
+// Returns the property name of a `member_expression` (e.g. `charsets` for
+// `express.static.mime.charsets`), or null for any other node.
+function getPropertyName(node: SgNode<Js> | null | undefined): string | null {
+  if (!node?.is('member_expression')) return null
+
+  const property = node.field('property')
+  return property ? property.text() : null
 }
 
 // Builds the edit that introduces the `mime-types` binding. The statement style

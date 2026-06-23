@@ -13,6 +13,20 @@ binding and adds the corresponding import/require to the file:
 3. Reuses an existing `mime-types` import when the file already has one, and falls
    back to a non-colliding name (`mimeTypes`) when `mime` is already taken.
 
+The object Express 4 exposed as `express.static.mime` was a [`mime@1.x`](https://github.com/broofa/mime/tree/v1.6.0)
+instance, whose API is **not** identical to `mime-types`. The codemod rewrites
+each member accordingly:
+
+| `express.static.mime` (mime@1.x) | `mime-types` | Handled by |
+| --- | --- | --- |
+| `.lookup(path)` | `.lookup(path)` | rename of the binding |
+| `.extension(type)` | `.extension(type)` | rename of the binding |
+| `.types` / `.extensions` | `.types` / `.extensions` | rename of the binding |
+| `.charsets.lookup(type)` | `.charset(type)` | method rewrite |
+| `.define(map)` | _no equivalent_ | flagged with a `TODO` comment |
+| `.load(path)` | _no equivalent_ | flagged with a `TODO` comment |
+| `.default_type` | _no equivalent_ | flagged with a `TODO` comment |
+
 ## Example
 
 ```diff
@@ -21,6 +35,23 @@ binding and adds the corresponding import/require to the file:
 
 - const type = express.static.mime.lookup('json')
 + const type = mime.lookup('json')
+```
+
+### Renamed method
+
+```diff
+- const charset = express.static.mime.charsets.lookup('text/html')
++ const charset = mime.charset('text/html')
+```
+
+### Methods without a `mime-types` equivalent
+
+`define`, `load`, and `default_type` cannot be migrated automatically, so the
+codemod points them at the new binding and flags them for manual review:
+
+```diff
+- express.static.mime.define({ 'text/x-custom': ['cstm'] })
++ mime.define({ 'text/x-custom': ['cstm'] }) /* TODO: 'mime-types' has no define(); migrate manually */
 ```
 
 ### CommonJS
@@ -51,11 +82,12 @@ An existing `mime-types` entry is left untouched, and `package.json` files witho
 
 ## Notes
 
-- The `mime-types` package is not API-compatible with the `mime@1.x` instance that
-  Express 4 exposed through `express.static.mime`. Methods such as `lookup`,
-  `extension`, `charset`, `contentType`, `types`, and `extensions` are available,
-  but `define`, `load`, and `default_type` are not. Review usages of those methods
-  after running the codemod.
+- Behavior differs slightly even for the shared methods: `mime-types` returns
+  `false` for unknown input, whereas `mime@1.x` `lookup()` fell back to
+  `default_type` (`application/octet-stream`). Review code that relied on that
+  fallback.
+- Members flagged with a `TODO` comment (`define`, `load`, `default_type`) have no
+  `mime-types` equivalent and must be migrated by hand.
 - Run `npm install` after the migration so the added `mime-types` dependency is installed.
 
 ## References

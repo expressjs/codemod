@@ -4,7 +4,7 @@ import otherLib from "other-lib";
 
 staticExpress.static.mime.lookup('a');
 
-expressNS.static.mime.charset('text/css');
+expressNS.static.mime.charsets.lookup('text/css');
 
 // Not express: must be left untouched.
 otherLib.static.mime.lookup('b');
