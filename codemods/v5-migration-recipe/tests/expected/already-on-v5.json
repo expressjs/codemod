@@ -1,0 +1,9 @@
+{
+  "name": "already-on-v5",
+  "dependencies": {
+    "express": "^5.2.1",
+    "qs": "^6.15.0",
+    "send": "^1.2.0",
+    "body-parser": "^2.2.1"
+  }
+}

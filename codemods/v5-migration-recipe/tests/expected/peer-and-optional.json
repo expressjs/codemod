@@ -1,0 +1,11 @@
+{
+  "name": "express-plugin",
+  "peerDependencies": {
+    "body-parser": "^2.2.1",
+    "express": "^5.0.0"
+  },
+  "optionalDependencies": {
+    "@types/express": "^5.0.0",
+    "serve-static": "^2.2.0"
+  }
+}

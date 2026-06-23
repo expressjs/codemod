@@ -4,6 +4,7 @@ This codemod migration recipe helps you update your Express.js v4 applications t
 
 Included transformations:
 
+- **Package JSON Dependencies**: Updates existing package entries in `package.json` that match Express.js v5 direct dependencies and related Express type packages.
 - **Back Redirect Deprecated**: This transformation updates instances of `res.redirect('back')` and `res.location('back')` to use the recommended alternatives. Registry entry: [https://app.codemod.com/registry/@expressjs/back-redirect-deprecated](https://app.codemod.com/registry/@expressjs/back-redirect-deprecated).
 - **Explicit Request Params**: Migrates usage of the legacy API `req.param(name)` to the current recommended alternatives. Registry entry: [https://app.codemod.com/registry/@expressjs/explicit-request-params](https://app.codemod.com/registry/@expressjs/explicit-request-params).
 - **Pluralize Method Names**: Migrates deprecated singular request methods to their pluralized counterparts where applicable. Registry entry: [https://app.codemod.com/registry/@expressjs/pluralize-method-names](https://app.codemod.com/registry/@expressjs/pluralize-method-names).
@@ -11,6 +12,9 @@ Included transformations:
 - **Redirect Arg Order**: Converts `res.redirect(url, status)` calls to the recommended `res.redirect(status, url)` ordering. Registry entry: [https://app.codemod.com/registry/@expressjs/redirect-arg-order](https://app.codemod.com/registry/@expressjs/redirect-arg-order).
 - **Camelcase Sendfile**: Replaces legacy `res.sendfile(file)` usages with the camel-cased `res.sendFile(file)` API. Registry entry: [https://app.codemod.com/registry/@expressjs/camelcase-sendfile](https://app.codemod.com/registry/@expressjs/camelcase-sendfile).
 - **Route Del to Delete**: Migrates usage of the legacy APIs `app.del()` to `app.delete()`. Registry entry: [https://app.codemod.com/registry/@expressjs/route-del-to-delete](https://app.codemod.com/registry/@expressjs/route-del-to-delete).
+- **Static Dotfiles**: Adds an explicit `dotfiles` option to `express.static()` calls and renames the removed `hidden` and `from` options to preserve Express 4 behavior. Registry entry: [https://app.codemod.com/registry/@expressjs/static-dotfiles](https://app.codemod.com/registry/@expressjs/static-dotfiles).
+- **Static Mime**: Migrates `express.static.mime` (removed in Express 5) to the `mime-types` package. Registry entry: [https://app.codemod.com/registry/@expressjs/static-mime](https://app.codemod.com/registry/@expressjs/static-mime).
+- **Sendfile Options**: Adds an explicit `dotfiles` option to `res.sendFile()` calls and renames the removed `hidden` and `from` options to preserve Express 4 behavior. Registry entry: [https://app.codemod.com/registry/@expressjs/sendfile-options](https://app.codemod.com/registry/@expressjs/sendfile-options).
 
 ## References
 

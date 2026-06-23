@@ -1,0 +1,6 @@
+{
+  "name": "dev-only",
+  "devDependencies": {
+    "express": "~4.21.0"
+  }
+}
