@@ -36,3 +36,6 @@ nodes:
       - name: Migrates express.static.mime to the mime-types package
         codemod:
           source: "@expressjs/static-mime"
+      - name: Adds explicit dotfiles option to res.sendFile() calls to preserve Express 4 behavior
+        codemod:
+          source: "@expressjs/sendfile-options"
