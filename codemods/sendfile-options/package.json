@@ -1,0 +1,22 @@
+{
+  "name": "@expressjs/sendfile-options",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Migrates res.sendFile() options to Express 5: adds an explicit dotfiles option and renames the removed hidden and from options",
+  "type": "module",
+  "scripts": {
+    "test": "npx codemod jssg test -l typescript ./src/workflow.ts ./"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/expressjs/codemod.git",
+    "directory": "codemods/sendfile-options",
+    "bugs": "https://github.com/expressjs/codemod/issues"
+  },
+  "author": "Sebastian Beltran",
+  "license": "MIT",
+  "homepage": "https://github.com/expressjs/codemod/blob/main/codemods/sendfile-options/README.md",
+  "devDependencies": {
+    "@codemod.com/jssg-types": "^1.5.0"
+  }
+}
